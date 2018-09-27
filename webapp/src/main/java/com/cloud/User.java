@@ -1,4 +1,4 @@
-package com.cloudcomputing;
+package com.cloud;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
