@@ -95,7 +95,14 @@ echo "$SUBNET_NAME6 deleted!"
 #		--query 'RouteTables[*].{id:RouteTableId}' \
 #	       --output text)
 
-echo "Please Enter Route table Id:"
+#ROUTE_TABLE_ID=(aws ec2 describe-route-tables 
+#	--filters 'Name=route,Values=$VPC_ID' \
+#		--query 'RouteTables[*].{id:RouteTableId}')
+
+echo "Route Table Deletion"
+aws ec2 describe-route-tables
+echo "Enter RouteTable Id"
+
 read ROUTE_TABLE_ID
 
 aws ec2 delete-route-table --route-table-id $ROUTE_TABLE_ID
@@ -103,10 +110,10 @@ echo "Route Table deleted"
 
 #################################################################
 echo "Detach your Internet Gateway from VPC"
-#read IGW_ID
-IGW_ID=$(aws ec2 describe-internet-gateways \
-               --query 'InternetGateways[*].{id:InternetGatewayId}' \
-              --output text)
+read IGW_ID
+#IGW_ID=$(aws ec2 describe-internet-gateways \
+ #              --query 'InternetGateways[*].{id:InternetGatewayId}' \
+  #            --output text)
 echo "$IGW_ID ...................."
 
 aws ec2 detach-internet-gateway --internet-gateway-id $IGW_ID --vpc-id $VPC_ID
