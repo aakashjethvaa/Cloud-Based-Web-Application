@@ -1,33 +1,11 @@
 #!/bin/bash
-#
-#DESCRIPTION
-# This shell script contains the AWS commnd Line Interface to
-# automatically create a custome VPC. 
-#
-#==========================================================
-#NOTE
-#CONTRIBUTOR: KOMAL, KIRAN, AAKASH, HEMANT
-#ASSIGNMENT_2
-#
-#FINAL VALUES
+# Create VPC
+echo "Creating VPC"
 echo "Enter AWS region"
 read AWS_REGION
-echo "Enter VPC name"
-read VPC_NAME
 echo "Enter VPC cidr"
-read VPC_CIDR 
+read VPC_CIDR
 
-#SUBNET_PUBLIC_CIDR="10.0.1.0/24"
-#SUBNET_PUBLIC_CIDR_A="10.0.0.0/24"
-#SUBNET_PUBLIC_CIDR_C="10.0.2.0/24"
-#SUBNET_REGION_A="us-east-1a"
-#SUBNET_REGION_B="us-east-1b"
-#SUBNET_REGION_C="us-east-1c"
-#SUBNET_REGION_D="us-east-1d"
-#
-#
-#Create VPC
-echo "creating VPC in $AWS_REGION.."
 
 VPC_ID=$(aws ec2 create-vpc \
   --cidr-block $VPC_CIDR \
@@ -36,90 +14,197 @@ VPC_ID=$(aws ec2 create-vpc \
   --region $AWS_REGION)
 echo "  VPC ID '$VPC_ID' CREATED in '$AWS_REGION' region."
 
+echo "Enter VPC name"
+read VPC_NAME
+# Add Name tag to VPC
 aws ec2 create-tags \
   --resources $VPC_ID \
   --tags "Key=Name,Value=$VPC_NAME" \
   --region $AWS_REGION
-echo "  VPC ID '$VPC_ID' NAMED as '$VPC_NAME'."
+echo " VPC ID '$VPC_ID' NAMED as '$VPC_NAME'."
 
 
-echo "Creating Public Subnet..."
-echo "Enter Subnet public cidr"
-read SUBNET_CIDR
-echo "Enter Subnet region"
-read SUBNET_REGION
-SUBNET_PUBLIC_ID=$(aws ec2 create-subnet \
-  --vpc-id $VPC_ID  \
-  --cidr-block $SUBNET_CIDR \
-  --availability-zone $SUBNET_REGION \
+# Create Public Subnet
+echo "Creating first Public Subnet..."
+echo "Enter Subnet public CIDR"
+read SUBNET_PUBLIC_CIDR1
+echo "Enter Subnet public availibility Zone"
+read SUBNET_PUBLIC_AZ1
+echo "Enter public subnet 1 name"
+read SUBNET_PUBLIC_NAME1
+
+SUBNET_PUBLIC_ID1=$(aws ec2 create-subnet \
+  --vpc-id $VPC_ID \
+  --cidr-block $SUBNET_PUBLIC_CIDR1 \
+  --availability-zone $SUBNET_PUBLIC_AZ1 \
   --query 'Subnet.{SubnetId:SubnetId}' \
   --output text \
   --region $AWS_REGION)
-echo "  Subnet ID '$SUBNET_ID' CREATED in '$SUBNET_REGION'" \
-"Availability Zone."
+echo "  Subnet ID '$SUBNET_PUBLIC_ID1' CREATED in '$SUBNET_PUBLIC_AZ1'" \
+  "Availability Zone."
 
 # Add Name tag to Public Subnet
 aws ec2 create-tags \
-  --resources $SUBNET_ID \
-  --tags "Key=Name,Value=$SUBNET_NAME" \
+  --resources $SUBNET_PUBLIC_ID1 \
+  --tags "Key=Name,Value=$SUBNET_PUBLIC_NAME1" \
   --region $AWS_REGION
-echo "  Subnet ID '$SUBNET_ID' NAMED as" \
-"'$SUBNET_NAME'."
+echo "  Subnet ID '$SUBNET_PUBLIC_ID1' NAMED as" \
+  "'$SUBNET_PUBLIC_NAME1'."
 
-##################################################################
-#create one more subnet
 
-echo "Do you want to create another subnet in this VPC?(y/N)"
-read x
+echo "Creating second Public Subnet..."
+echo "Enter Subnet public CIDR"
+read SUBNET_PUBLIC_CIDR2
+echo "Enter Subnet public availibility Zone"
+read SUBNET_PUBLIC_AZ2
+echo "Enter public subnet 2 name"
+read SUBNET_PUBLIC_NAME2
 
-# now check if $x is "y"
-if [ "$x" = "y" ]; then
-
-echo "Creating Subnet..."
-echo "Enter Subnet cidr .."
-read SUBNET_CIDR
-echo "Enter Subnet region"
-read SUBNET_REGION
-echo "Enter Subnet Name"
-read SUBNET_NAME
-
-SUBNET_ID=$(aws ec2 create-subnet \
-  --vpc-id $VPC_ID  \
-  --cidr-block $SUBNET_CIDR \
-  --availability-zone $SUBNET_REGION \
+SUBNET_PUBLIC_ID2=$(aws ec2 create-subnet \
+  --vpc-id $VPC_ID \
+  --cidr-block $SUBNET_PUBLIC_CIDR2 \
+  --availability-zone $SUBNET_PUBLIC_AZ2 \
   --query 'Subnet.{SubnetId:SubnetId}' \
   --output text \
   --region $AWS_REGION)
-echo "  Subnet ID '$SUBNET_ID' CREATED in '$SUBNET_REGION'" \
-"Availability Zone."
+echo "  Subnet ID '$SUBNET_PUBLIC_ID2' CREATED in '$SUBNET_PUBLIC_AZ2'" \
+  "Availability Zone."
 
 # Add Name tag to Public Subnet
 aws ec2 create-tags \
-  --resources $SUBNET_ID \
-  --tags "Key=Name,Value=$SUBNET_NAME" \
+  --resources $SUBNET_PUBLIC_ID2 \
+  --tags "Key=Name,Value=$SUBNET_PUBLIC_NAME2" \
   --region $AWS_REGION
-echo "  Subnet ID '$SUBNET_ID' NAMED as" \
-"'$SUBNET_NAME'."
+echo "  Subnet ID '$SUBNET_PUBLIC_ID2' NAMED as" \
+  "'$SUBNET_PUBLIC_NAME2'."
 
-fi
 
-####################################################
-echo "Make your subnet public"
-echo "Create an Internet Gateway"
+echo "Creating third Public Subnet..."
+echo "Enter Subnet public CIDR"
+read SUBNET_PUBLIC_CIDR3
+echo "Enter Subnet public availibility Zone"
+read SUBNET_PUBLIC_AZ3
+echo "Enter public subnet 3 name"
+read SUBNET_PUBLIC_NAME3
 
+SUBNET_PUBLIC_ID3=$(aws ec2 create-subnet \
+  --vpc-id $VPC_ID \
+  --cidr-block $SUBNET_PUBLIC_CIDR3 \
+  --availability-zone $SUBNET_PUBLIC_AZ3 \
+  --query 'Subnet.{SubnetId:SubnetId}' \
+  --output text \
+  --region $AWS_REGION)
+echo "  Subnet ID '$SUBNET_PUBLIC_ID3' CREATED in '$SUBNET_PUBLIC_AZ3'" \
+  "Availability Zone."
+
+# Add Name tag to Public Subnet
+aws ec2 create-tags \
+  --resources $SUBNET_PUBLIC_ID3 \
+  --tags "Key=Name,Value=$SUBNET_PUBLIC_NAME3" \
+  --region $AWS_REGION
+echo "  Subnet ID '$SUBNET_PUBLIC_ID3' NAMED as" \
+  "'$SUBNET_PUBLIC_NAME3'."
+
+
+# Create Private Subnet
+
+echo "Creating Private Subnet..."
+echo "Creating first Private Subnet..."
+echo "Enter Subnet private CIDR1"
+read SUBNET_PRIVATE_CIDR1
+echo "Enter Subnet private availibility Zone1"
+read SUBNET_PRIVATE_AZ1
+echo "Enter private subnet 1 name"
+read SUBNET_PRIVATE_NAME1
+
+
+SUBNET_PRIVATE_ID1=$(aws ec2 create-subnet \
+  --vpc-id $VPC_ID \
+  --cidr-block $SUBNET_PRIVATE_CIDR1 \
+  --availability-zone $SUBNET_PRIVATE_AZ1 \
+  --query 'Subnet.{SubnetId:SubnetId}' \
+  --output text \
+  --region $AWS_REGION)
+echo "  Subnet ID '$SUBNET_PRIVATE_ID1' CREATED in '$SUBNET_PRIVATE_AZ1'" \
+  "Availability Zone."
+
+# Add Name tag to Private Subnet
+aws ec2 create-tags \
+  --resources $SUBNET_PRIVATE_ID1 \
+  --tags "Key=Name,Value=$SUBNET_PRIVATE_NAME1" \
+  --region $AWS_REGION
+echo "  Subnet ID '$SUBNET_PRIVATE_ID1' NAMED as '$SUBNET_PRIVATE_NAME1'."
+
+
+echo "Creating second Private Subnet..."
+echo "Enter Subnet private CIDR2"
+read SUBNET_PRIVATE_CIDR2
+echo "Enter Subnet private availibility Zone2"
+read SUBNET_PRIVATE_AZ2
+echo "Enter private subnet 2 name"
+read SUBNET_PRIVATE_NAME2
+
+
+SUBNET_PRIVATE_ID2=$(aws ec2 create-subnet \
+  --vpc-id $VPC_ID \
+  --cidr-block $SUBNET_PRIVATE_CIDR2 \
+  --availability-zone $SUBNET_PRIVATE_AZ2 \
+  --query 'Subnet.{SubnetId:SubnetId}' \
+  --output text \
+  --region $AWS_REGION)
+echo "  Subnet ID '$SUBNET_PRIVATE_ID2' CREATED in '$SUBNET_PRIVATE_AZ2'" \
+  "Availability Zone."
+
+# Add Name tag to Private Subnet
+aws ec2 create-tags \
+  --resources $SUBNET_PRIVATE_ID2 \
+  --tags "Key=Name,Value=$SUBNET_PRIVATE_NAME2" \
+  --region $AWS_REGION
+echo "  Subnet ID '$SUBNET_PRIVATE_ID2' NAMED as '$SUBNET_PRIVATE_NAME2'."
+
+
+echo "Creating third Private Subnet..."
+echo "Enter Subnet private CIDR3"
+read SUBNET_PRIVATE_CIDR3
+echo "Enter Subnet private availibility Zone3"
+read SUBNET_PRIVATE_AZ3
+echo "Enter private subnet 3 name"
+read SUBNET_PRIVATE_NAME3
+
+
+SUBNET_PRIVATE_ID3=$(aws ec2 create-subnet \
+  --vpc-id $VPC_ID \
+  --cidr-block $SUBNET_PRIVATE_CIDR3 \
+  --availability-zone $SUBNET_PRIVATE_AZ3 \
+  --query 'Subnet.{SubnetId:SubnetId}' \
+  --output text \
+  --region $AWS_REGION)
+echo "  Subnet ID '$SUBNET_PRIVATE_ID3' CREATED in '$SUBNET_PRIVATE_AZ3'" \
+  "Availability Zone."
+
+ Add Name tag to Private Subnet
+aws ec2 create-tags \
+  --resources $SUBNET_PRIVATE_ID3 \
+  --tags "Key=Name,Value=$SUBNET_PRIVATE_NAME3" \
+  --region $AWS_REGION
+echo "  Subnet ID '$SUBNET_PRIVATE_ID3' NAMED as '$SUBNET_PRIVATE_NAME3'."
+
+# Create Internet gateway
+echo "Creating Internet Gateway..."
 IGW_ID=$(aws ec2 create-internet-gateway \
   --query 'InternetGateway.{InternetGatewayId:InternetGatewayId}' \
   --output text \
   --region $AWS_REGION)
 echo "  Internet Gateway ID '$IGW_ID' CREATED."
-echo "Attaching Internet gateway to VPC ID..."
 
+# Attach Internet gateway to your VPC
 aws ec2 attach-internet-gateway \
   --vpc-id $VPC_ID \
   --internet-gateway-id $IGW_ID \
   --region $AWS_REGION
 echo "  Internet Gateway ID '$IGW_ID' ATTACHED to VPC ID '$VPC_ID'."
 
+#######################################################################
 
 # Create Route Table
 echo "Creating Route Table..."
@@ -130,7 +215,6 @@ ROUTE_TABLE_ID=$(aws ec2 create-route-table \
   --region $AWS_REGION)
 echo "  Route Table ID '$ROUTE_TABLE_ID' CREATED."
 
-
 # Create route to Internet Gateway
 RESULT=$(aws ec2 create-route \
   --route-table-id $ROUTE_TABLE_ID \
@@ -138,19 +222,31 @@ RESULT=$(aws ec2 create-route \
   --gateway-id $IGW_ID \
   --region $AWS_REGION)
 echo "  Route to '0.0.0.0/0' via Internet Gateway ID '$IGW_ID' ADDED to" \
-"Route Table ID '$ROUTE_TABLE_ID'."
+  "Route Table ID '$ROUTE_TABLE_ID'."
+
 
 # Associate Public Subnet with Route Table
-
-RESULT=$(aws ec2 associate-route-table  \
-  --subnet-id $SUBNET_ID \
+RESULT1=$(aws ec2 associate-route-table  \
+  --subnet-id $SUBNET_PUBLIC_ID1 \
   --route-table-id $ROUTE_TABLE_ID \
   --region $AWS_REGION)
-echo "  Public Subnet ID '$SUBNET__ID' ASSOCIATED with Route Table ID" \
-"'$ROUTE_TABLE_ID'."
+echo "  Public Subnet ID '$SUBNET_PUBLIC_ID1' ASSOCIATED with Route Table ID" \
+  "'$ROUTE_TABLE_ID'."
 
-############################################################
+RESULT2=$(aws ec2 associate-route-table  \
+  --subnet-id $SUBNET_PUBLIC_ID2 \
+  --route-table-id $ROUTE_TABLE_ID \
+  --region $AWS_REGION)
+echo "  Public Subnet ID '$SUBNET_PUBLIC_ID2' ASSOCIATED with Route Table ID" \
+  "'$ROUTE_TABLE_ID'."
+
+RESULT3=$(aws ec2 associate-route-table  \
+  --subnet-id $SUBNET_PUBLIC_ID3 \
+  --route-table-id $ROUTE_TABLE_ID \
+  --region $AWS_REGION)
+echo "  Public Subnet ID '$SUBNET_PUBLIC_ID3' ASSOCIATED with Route Table ID" \
+  "'$ROUTE_TABLE_ID'."
 
 
-
+aws ec2 describe-subnets --filters "Name=vpc-id,Values=$VPC_ID" --query 'Subnets[*].{ID:SubnetId,CIDR:CidrBlock}'
 
