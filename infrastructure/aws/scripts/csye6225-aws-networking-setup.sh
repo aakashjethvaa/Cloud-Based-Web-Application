@@ -1,4 +1,10 @@
+
+
+
+
+
 #!/bin/bash
+
 # Create VPC
 echo "Creating VPC"
 echo "Enter AWS region"
@@ -22,6 +28,7 @@ aws ec2 create-tags \
   --tags "Key=Name,Value=$VPC_NAME" \
   --region $AWS_REGION
 echo " VPC ID '$VPC_ID' NAMED as '$VPC_NAME'."
+
 
 
 # Create Public Subnet
@@ -58,9 +65,7 @@ read SUBNET_PUBLIC_CIDR2
 echo "Enter Subnet public availibility Zone"
 read SUBNET_PUBLIC_AZ2
 echo "Enter public subnet 2 name"
-read SUBNET_PUBLIC_NAME2
-
-SUBNET_PUBLIC_ID2=$(aws ec2 create-subnet \
+UBNET_PUBLIC_ID2=$(aws ec2 create-subnet \
   --vpc-id $VPC_ID \
   --cidr-block $SUBNET_PUBLIC_CIDR2 \
   --availability-zone $SUBNET_PUBLIC_AZ2 \
@@ -104,7 +109,6 @@ aws ec2 create-tags \
   --region $AWS_REGION
 echo "  Subnet ID '$SUBNET_PUBLIC_ID3' NAMED as" \
   "'$SUBNET_PUBLIC_NAME3'."
-
 
 # Create Private Subnet
 
@@ -223,8 +227,6 @@ RESULT=$(aws ec2 create-route \
   --region $AWS_REGION)
 echo "  Route to '0.0.0.0/0' via Internet Gateway ID '$IGW_ID' ADDED to" \
   "Route Table ID '$ROUTE_TABLE_ID'."
-
-
 # Associate Public Subnet with Route Table
 RESULT1=$(aws ec2 associate-route-table  \
   --subnet-id $SUBNET_PUBLIC_ID1 \
