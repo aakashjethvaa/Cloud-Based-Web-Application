@@ -7,13 +7,19 @@ import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.google.gson.JsonObject;
 
 @RestController
@@ -64,6 +70,7 @@ public class UserController {
 			User up = new User();
 			up.setId(user.getId());
 			up.setFirstName(user.getFirstName());
+			up.setLastName(user.getLastName());
 			up.setEmail(user.getEmail());
 			up.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			userRepository.save(up);
@@ -76,5 +83,24 @@ public class UserController {
 		jsonObject.addProperty("message", "User already exists");
 		return jsonObject.toString();
 	}
+	
+	@PutMapping("/user/{userId}")
+    public User updateUser(@PathVariable Long userId, @Valid @RequestBody User userRequest) {
+        return userRepository.findById(userId).map(user -> {
+        	user.setFirstName(userRequest.getFirstName());
+        	user.setLastName(userRequest.getLastName());
+        	user.setEmail(userRequest.getEmail());
+            return userRepository.save(user);
+        }).orElseThrow(() -> new ResourceNotFoundException("UserId " + userId + " not found"));
+    }
+	
+	 @DeleteMapping("/user/{userId}")
+	    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
+	        return userRepository.findById(userId).map(user -> {
+	        	userRepository.delete(user);
+	            return ResponseEntity.ok().build();
+	        }).orElseThrow(() -> new ResourceNotFoundException("UserId " + userId + " not found"));
+	    }
+
 
 }

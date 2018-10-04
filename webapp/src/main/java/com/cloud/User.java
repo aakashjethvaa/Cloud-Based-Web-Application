@@ -1,9 +1,14 @@
 package com.cloud;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -14,13 +19,19 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private String password;
+	
+//	@OneToMany(mappedBy="user", cascade= CascadeType.ALL, fetch= FetchType.EAGER)
+//	private Set<Transaction> transaction;
+	
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	private String password;
+	
+	
 	
 	public Long getId() {
 		return id;
@@ -28,6 +39,12 @@ public class User {
 	public void setId(Long id) {
 		this.id = id;
 	}
+//	public Set<Transaction> getTransaction() {
+//		return transaction;
+//	}
+//	public void setTransaction(Set<Transaction> transaction) {
+//		this.transaction = transaction;
+//	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -46,4 +63,6 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
 }
