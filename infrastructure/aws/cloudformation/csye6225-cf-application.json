@@ -11,15 +11,20 @@
 		"SubnetId1":{
 			"Type":"String"
 		},
-		"VpcId":{"Type":"String"}
+		"VpcId":{
+			"Type":"String"
+		},
+		"KeyName":{
+			"Type":"String"
+		}
 	},
 	"Resources": {
 		"ourEC2Instance": {
 			"Type": "AWS::EC2::Instance",
 			"Properties": {
 				"InstanceType": "t2.micro",
-				"DisableApiTermination": true,
 				"ImageId" : "ami-9887c6e7",
+				"KeyName" : "MyKeyPair",
 				"BlockDeviceMappings" : [
 					{
 						"DeviceName" : "/dev/sda1",
