@@ -12,6 +12,10 @@ Using JPA annotations first created a User Pojo
 Later Extended JPA Repository to User Repository
 Incorporated User Controller and deviced all JPA annotations
 Later added the BCryptPasswordEncoderBean used for hashing passwords.
+Using @ManyToOne annotation  mapped Transaction pojo to User pojo
+Extended JPA Repository to Transaction Repository
+Incorporated Transaction Controller and deviced all JPA annotations
+Incorporated Authentication and Authorization on Transaction using User Credentials
 
 AWS Cloud Formation:
 
