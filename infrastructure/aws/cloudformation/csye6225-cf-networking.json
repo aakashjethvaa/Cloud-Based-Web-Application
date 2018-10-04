@@ -3,116 +3,112 @@
   "Description" : "Cloud Formation Template", 
  
   "Resources" : {
-    "MyVPC" : {
+    "VPC" : {
 	    "Type" : "AWS::EC2::VPC",
 	    "Properties" : {
 	        "CidrBlock" : "10.0.0.0/16",
-	        "Tags" : [ 
-			{
-				"Key" : "Name", 
-				"Value" : "MyVPC" 
-			} 
-			]
-	      }
-	    },
-		
-	"MyPublicSubnet1" : {
+		"EnableDnsSupport" : "true",
+ 		"EnableDnsHostnames" : "true",
+      		"InstanceTenancy" : "default",
+		"Tags" : [ {"Key" : "Name", "Value" : "kpvpc" } ]
+		}
+            },
+    "PublicSubnet1" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
  	        "AvailabilityZone" : "us-east-1a",
-	        "VpcId" : { "Ref" : "MyVPC" },
-	        "CidrBlock" : "10.0.0.0/24",
+	        "VpcId" : { "Ref" : "VPC" },
+	        "CidrBlock" : "10.0.1.0/24",
 		"MapPublicIpOnLaunch" : true,
-	        "Tags" : [ {"Key" : "Name", "Value" : "MyPublicSubnet1" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pb1" } ]
 	      }
 	    },
-		
-	"MyPublicSubnet2" : {
+    "PublicSubnet2" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
 		"AvailabilityZone" : "us-east-1b",
-	        "VpcId" : { "Ref" : "MyVPC" },
-	        "CidrBlock" : "10.0.1.0/24",
+	        "VpcId" : { "Ref" : "VPC" },
+	        "CidrBlock" : "10.0.2.0/24",
 		"MapPublicIpOnLaunch" : true,
-	        "Tags" : [ {"Key" : "Name", "Value" : "MyPublicSubnet2" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pb2" } ]
 	      }
 	    },	
 		
-	"MyPublicSubnet3" : {
+    "PublicSubnet3" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
 		"AvailabilityZone" : "us-east-1c",
-	        "VpcId" : { "Ref" : "MyVPC" },
+	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.3.0/24",
 		"MapPublicIpOnLaunch" : true,
-	        "Tags" : [ {"Key" : "Name", "Value" : "MyPublicSubnet3" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pb3" } ]
 	      }
-	    },	
-	
-	"MyPrivateSubnet1" : {
+	    },
+
+     "PrivateSubnet1" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
 		"AvailabilityZone" : "us-east-1a",
-	        "VpcId" : { "Ref" : "MyVPC" },
+	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.4.0/24",
 		"MapPublicIpOnLaunch" : false,
-	        "Tags" : [ {"Key" : "Name", "Value" : "MyPrivateSubnet1" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pv1" } ]
 	      }
 	    },
 	
-	"MyPrivateSubnet2" : {
+    "PrivateSubnet2" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
 		"AvailabilityZone" : "us-east-1b",
-	        "VpcId" : { "Ref" : "MyVPC" },
+	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.5.0/24",
 		"MapPublicIpOnLaunch" : false,
-	        "Tags" : [ {"Key" : "Name", "Value" : "MyPrivateSubnet2" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pv2" } ]
 	      }
 	    },
 		
-	"MyPrivateSubnet3" : {
+    "PrivateSubnet3" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
 		"AvailabilityZone" : "us-east-1c",
-	        "VpcId" : { "Ref" : "MyVPC" },
+	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.6.0/24",
 		"MapPublicIpOnLaunch" : false,
-	        "Tags" : [ {"Key" : "Name", "Value" : "MyPrivateSubnet3" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pv3" } ]
 	      }
 	    },
-		
-	"MyInternetGateway" : {
+
+    "InternetGateway" : {
 	      "Type" : "AWS::EC2::InternetGateway",
 	      "Properties" : {
-	        "Tags" : [ {"Key" : "Name", "Value" : "MyInternetGateway" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "Kiran InternetGateway" } ]
 	      }
 	    },
 		
-	"AttachGateway" : {
+    "AttachGateway" : {
 	       "Type" : "AWS::EC2::VPCGatewayAttachment",
 	       "Properties" : {
-	         "VpcId" : { "Ref" : "MyVPC" },
-	         "InternetGatewayId" : { "Ref" : "MyInternetGateway" }
+	         "VpcId" : { "Ref" : "VPC" },
+	         "InternetGatewayId" : { "Ref" : "InternetGateway" }
 	       }
 	    },
-		
-	"MyRouteTable" : {
+
+    "RouteTable" : {
 	      "Type" : "AWS::EC2::RouteTable",
 	      "Properties" : {
-	        "VpcId" : {"Ref" : "MyVPC"},
-	        "Tags" : [ {"Key" : "Name", "Value" : "MyRouteTable" } ]
+	        "VpcId" : {"Ref" : "VPC"},
+	        "Tags" : [ {"Key" : "Name", "Value" : "Kiran PublicRouteTable" } ]
 	      }
 	    },
 		
-	"myRoute" : {
+    "Route" : {
          "Type" : "AWS::EC2::Route",
             "Properties" : {
-            "RouteTableId" : { "Ref" : "MyRouteTable" },
+            "RouteTableId" : { "Ref" : "RouteTable" },
             "DestinationCidrBlock" : "0.0.0.0/0",
-            "GatewayId" : { "Ref" : "MyInternetGateway" }
-         }
-      }	
-	
-  }
+            "GatewayId" : { "Ref" : "InternetGateway" }
+              }
+	    }
+
+	}
 }
