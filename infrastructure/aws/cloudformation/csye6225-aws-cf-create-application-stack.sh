@@ -15,4 +15,3 @@ do
 	STACK_STATUS=`aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[][ [StackStatus ] ][]" --output text`
 done
 echo "Created Stack ${STACK_NAME} successfully!"
-
