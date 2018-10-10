@@ -16,8 +16,23 @@
 		},
 		"KeyName":{
 			"Type":"String"
-		}
+		},
+		"S3BucketName" : {
+                        "Description" : "Domain name for the website",
+                        "Type" : "String"
+                },
+
+                "DynamoDBTableName" : {
+                        "Description" : "Table Name",
+                        "Type" : "String"
+                },
+
+                "MyDBName" : {
+                        "Description" : "Table name",
+                        "Type" : "String"
+                }
 	},
+
 	"Resources": {
 		"ourEC2Instance": {
 			"Type": "AWS::EC2::Instance",
@@ -89,7 +104,48 @@
 				"VpcId": {"Ref":"VpcId"}
 			}
 
-		}
+		},
+
+		"myDynamoDBTable" : {
+                        "Type" : "AWS::DyanmoDB::Table",
+                        "Properties" : {
+                                "KeySchema" : [
+                                        {
+                                                "AttributeName" : "id",
+                                                "KeyType" : "RANGE"
+                                        }
+                                ],
+
+      "ProvisionedThroughput" : {
+         "ReadCapacityUnits" : "5",
+         "WriteCapacityUnits" : "10"
+      },
+
+      "TableName" : {"Ref" : "DynamoDBTableName"}
+
+
+   }
+},
+                "myS3Bucket" : {
+                        "Type" : "AWS::S3::Bucket",
+                        "Properties" : {
+                                "BucketName" : {"Ref" : "S3BucketName"}
+        }
+},
+               "MyDB" : {
+                       "Type" : "AWS::RDS::DBInstance",
+                       "Properties" : {
+                               "DBInstanceClass" : "db.t2.medium",
+                               "Engine" : "MySQL",
+                               "MultiAZ" : "NO",
+                               "MasterUsername" : "csye6225master",
+                               "Masterpassword" : "csye6225password",
+                               "DBSubnetGroupName" : {"Ref": "SubnetId"},
+                               "PubliclyAccessible" : "No",
+                               "DBName" : {"Ref" : "MyDBName"},
+                               "VpcId" : {"Ref" : "VpcId"},
+                               "DBEC2SecurityGroup":{"Ref" : "DBEC2SecurityGroup"}
+                       }
 
 	}
 }

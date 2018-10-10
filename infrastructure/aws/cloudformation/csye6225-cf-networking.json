@@ -10,7 +10,7 @@
 		"EnableDnsSupport" : "true",
  		"EnableDnsHostnames" : "true",
       		"InstanceTenancy" : "default",
-		"Tags" : [ {"Key" : "Name", "Value" : "kpvpc" } ]
+		"Tags" : [ {"Key" : "Name", "Value" : "myvpc" } ]
 		}
             },
     "PublicSubnet1" : {
@@ -20,17 +20,17 @@
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.1.0/24",
 		"MapPublicIpOnLaunch" : true,
-	        "Tags" : [ {"Key" : "Name", "Value" : "pb1" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pub1" } ]
 	      }
 	    },
     "PublicSubnet2" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
-		"AvailabilityZone" : "us-east-1b",
+		"AvailabilityZone" : "us-east-1a",
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.2.0/24",
 		"MapPublicIpOnLaunch" : true,
-	        "Tags" : [ {"Key" : "Name", "Value" : "pb2" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pub2" } ]
 	      }
 	    },	
 		
@@ -41,7 +41,7 @@
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.3.0/24",
 		"MapPublicIpOnLaunch" : true,
-	        "Tags" : [ {"Key" : "Name", "Value" : "pb3" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pub3" } ]
 	      }
 	    },
 
@@ -52,18 +52,18 @@
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.4.0/24",
 		"MapPublicIpOnLaunch" : false,
-	        "Tags" : [ {"Key" : "Name", "Value" : "pv1" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pri1" } ]
 	      }
 	    },
 	
     "PrivateSubnet2" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
-		"AvailabilityZone" : "us-east-1b",
+		"AvailabilityZone" : "us-east-1a",
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.5.0/24",
 		"MapPublicIpOnLaunch" : false,
-	        "Tags" : [ {"Key" : "Name", "Value" : "pv2" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pri2" } ]
 	      }
 	    },
 		
@@ -74,14 +74,14 @@
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.6.0/24",
 		"MapPublicIpOnLaunch" : false,
-	        "Tags" : [ {"Key" : "Name", "Value" : "pv3" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pri3" } ]
 	      }
 	    },
 
     "InternetGateway" : {
 	      "Type" : "AWS::EC2::InternetGateway",
 	      "Properties" : {
-	        "Tags" : [ {"Key" : "Name", "Value" : "Kiran InternetGateway" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "vpcInternetGateway" } ]
 	      }
 	    },
 		
@@ -97,7 +97,7 @@
 	      "Type" : "AWS::EC2::RouteTable",
 	      "Properties" : {
 	        "VpcId" : {"Ref" : "VPC"},
-	        "Tags" : [ {"Key" : "Name", "Value" : "Kiran PublicRouteTable" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "vpcPublicRouteTable" } ]
 	      }
 	    },
 		
