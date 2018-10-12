@@ -16,18 +16,6 @@
 		},
 		"KeyName": {
 			"Type": "String"
-		},
-		"S3BucketName": {
-			"Description": "Domain name for the website",
-			"Type": "String"
-		},
-		"DynamoDBTableName": {
-			"Description": "Table Name",
-			"Type": "String"
-		},
-		"MyDBName": {
-			"Description": "Table name",
-			"Type": "String"
 		}
 	},
 	"Resources": {
@@ -106,64 +94,53 @@
 				}
 			}
 		},
-		"myDynamoDBTable": {
+		"myDynamoDB": {
 			"Type": "AWS::DynamoDB::Table",
 			"Properties": {
-				"AttributeDefinition" :[
+				"AttributeDefinitions" :[
 					{
-					"AttributeName":"Album",
+					"AttributeName":"id",
 					"AttributeType":"S"
 					}],
 				"KeySchema": [{
 					"AttributeName": "id",
-					"KeyType": "RANGE"
+					"KeyType": "HASH"
 				}],
 				"ProvisionedThroughput": {
 					"ReadCapacityUnits": "5",
 					"WriteCapacityUnits": "10"
 				},
-				"TableName": {
-					"Ref": "DynamoDBTableName"
-				}
+				"TableName": "dynamodb"
 			}
 		},
 		"myS3Bucket": {
 			"Type": "AWS::S3::Bucket",
 			"Properties": {
-				"BucketName": {
-					"Ref": "S3BucketName"
-				}
+				"BucketName": "csye6225-fall2018-jethvaa.me.csye6225.com"
 			}
 		},
 		"MyDB": {
 			"Type": "AWS::RDS::DBInstance",
 			"Properties": {
+				"AllocatedStorage":"100",
 				"DBInstanceClass": "db.t2.medium",
 				"Engine": "MySQL",
-				"MultiAZ": "NO",
+				"MultiAZ": "false",
 				"MasterUsername": "csye6225master",
-				"Masterpassword": "csye6225password",
+				"MasterUserPassword": "csye6225password",
 				"DBSubnetGroupName": {
 					"Ref": "myDBSubnetGroup"
 				},
-				"PubliclyAccessible": "No",
-				"DBName": {
-					"Ref": "MyDBName"
-				},
-				"VpcId": {
-					"Ref": "VpcId"
-				},
-				"DBEC2SecurityGroup": {
-					"Ref": "EC2SecurityGroup"
-				}
+				"PubliclyAccessible": "false",
+				"DBName": "myDB",
+				"VPCSecurityGroups":["sg-06a2961ce1a9797ea"]
 			}
 		},
 		"myDBSubnetGroup": {
 			"Type": "AWS::RDS::DBSubnetGroup",
 			"Properties": {
 				"DBSubnetGroupDescription": "description",
-				"SubnetIds": ["subnet-01647a22a1db11add", "subnet-0f53049098db4b376", "subnet-0f53049098db4b376", "subnet-0f53049098db4b376", "subnet-0f53049098db4b376", "subnet-0f53049098db4b376"]
-
+				"SubnetIds": ["subnet-01647a22a1db11add", "subnet-0249025bb00acbf7f" ]
 			}
 		}
 	}
