@@ -32,3 +32,18 @@ command: ./csye6225-aws-cf-terminate-stack.sh
 user should enter the name of the stack to be deleted
 This will delete the cloud formation stack on aws
 
+--------------------------------------------------------------
+Cloud formation 
+-S3 Bucket generation
+-RDS instance creation
+-DynamoDB
+-Subnet Groups
+
+Web Application 
+-Returning Successful API calls
+-Storing image on the local disk and application S3 bucket
+-Updatet the application.json
+-Handling all the API Validations
+-Adding the AWS configuration to the Web application
+
+
