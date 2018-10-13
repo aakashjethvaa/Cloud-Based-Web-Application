@@ -3,6 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#webapp files
+
+.idea/
+*.iml
+*.iws
+
 # C extensions
 *.so
 
