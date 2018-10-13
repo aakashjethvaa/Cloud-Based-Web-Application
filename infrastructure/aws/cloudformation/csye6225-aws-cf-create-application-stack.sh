@@ -2,6 +2,7 @@ STACK_NAME=$1
 VPC_NAME="${STACK_NAME}-csye6225-vpc"
 EC2_NAME="${STACK_NAME}-csye6225-ec2"
 
+
 export vpcId=$(aws ec2 describe-vpcs --query "Vpcs[*].[CidrBlock, VpcId]" --output text|grep 10.0.0.0/16|awk '{print $2}')
 export subnetId1=$(aws ec2 describe-subnets --query 'Subnets[*].[SubnetId, VpcId, AvailabilityZone, CidrBlock]' --output text|grep 10.0.1.0/24|grep us-east-1a|awk '{print $1}')
 export eC2SecurityGroupId=$(aws ec2 describe-security-groups --query 'SecurityGroups[*].[VpcId, GroupId]' --output text|grep ${vpcId}|awk '{print $2}')
