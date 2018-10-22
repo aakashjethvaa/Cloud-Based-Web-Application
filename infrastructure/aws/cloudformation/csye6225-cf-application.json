@@ -20,6 +20,9 @@
 		},
 		"KeyName":{
 			"Type":"String"
+		},
+		"Bucketname":{
+			"Type":"String"
 		}
 	},
 	"Resources": {
@@ -116,7 +119,7 @@
 		"myS3Bucket": {
 			"Type": "AWS::S3::Bucket",
 			"Properties": {
-				"BucketName": "csye6225-fall2018-suthark.me.csye6225.com"
+				"BucketName": {"Ref":"Bucketname"}
 			}
 		},
 		"myDBSubnetGroup": {

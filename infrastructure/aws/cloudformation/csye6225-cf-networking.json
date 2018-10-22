@@ -20,7 +20,7 @@
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.0.0/24",
 		"MapPublicIpOnLaunch" : true,
-	        "Tags" : [ {"Key" : "Name", "Value" : "p1" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pub1" } ]
 	      }
 	    },
     "PublicSubnet2" : {
@@ -30,7 +30,7 @@
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.1.0/24",
 		"MapPublicIpOnLaunch" : true,
-	        "Tags" : [ {"Key" : "Name", "Value" : "p2" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pub2" } ]
 	      }
 	    },	
 		
@@ -41,7 +41,7 @@
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.2.0/24",
 		"MapPublicIpOnLaunch" : true,
-	        "Tags" : [ {"Key" : "Name", "Value" : "p3" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pub3" } ]
 	      }
 	    },
 
@@ -52,7 +52,7 @@
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.3.0/24",
 		"MapPublicIpOnLaunch" : false,
-	        "Tags" : [ {"Key" : "Name", "Value" : "pr1" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pri1" } ]
 	      }
 	    },
 	
@@ -63,7 +63,7 @@
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.4.0/24",
 		"MapPublicIpOnLaunch" : false,
-	        "Tags" : [ {"Key" : "Name", "Value" : "pr2" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pri2" } ]
 	      }
 	    },
 		
@@ -74,7 +74,7 @@
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : "10.0.5.0/24",
 		"MapPublicIpOnLaunch" : false,
-	        "Tags" : [ {"Key" : "Name", "Value" : "pr3" } ]
+	        "Tags" : [ {"Key" : "Name", "Value" : "pri3" } ]
 	      }
 	    },
 
