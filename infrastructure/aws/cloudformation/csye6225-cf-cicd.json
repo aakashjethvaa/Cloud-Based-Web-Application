@@ -1,0 +1,19 @@
+{
+   "Type" : "AWS::IAM::Policy",
+   "Properties" : {
+      "PolicyName" : "csye6225-fall2018-team",
+      "PolicyDocument" : {
+         "Version" : "2012-10-17",
+         "Statement": [ {
+         "Effect"   : "Allow",
+         "Action"   : [
+            "s3:*",
+            "ec2:*",
+            "codedeploy:*"
+         ],
+         "Resource" : "*"
+         } ]
+      },
+      "Groups" : [ { "Ref" : "csye6225-fall2018-teamGroup" } ]
+   }
+}
