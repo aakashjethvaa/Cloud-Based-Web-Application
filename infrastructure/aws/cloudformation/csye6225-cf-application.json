@@ -1,3 +1,4 @@
+
 {
 	"AWSTemplateFormatVersion": "2010-09-09",
 	"Description": "Cloud Formation Template - CSYE6225 - Creating EC2 instance , Security Groups and Ingress Rules",
@@ -8,14 +9,20 @@
 		"EC2SecurityGroup": {
 			"Type": "String"
 		},
-		"SubnetId1": {
-			"Type": "String"
+		"SubnetId1":{
+			"Type":"String"
 		},
-		"VpcId": {
-			"Type": "String"
+		"SubnetId2":{
+			"Type":"String"
 		},
-		"KeyName": {
-			"Type": "String"
+		"VpcId":{
+			"Type":"String"
+		},
+		"KeyName":{
+			"Type":"String"
+		},
+		"Bucketname":{
+			"Type":"String"
 		}
 	},
 	"Resources": {
@@ -23,76 +30,72 @@
 			"Type": "AWS::EC2::Instance",
 			"Properties": {
 				"InstanceType": "t2.micro",
-				"ImageId": "ami-9887c6e7",
-				"KeyName": "MyKeyPair",
-				"BlockDeviceMappings": [{
-					"DeviceName": "/dev/sda1",
-					"Ebs": {
-						"VolumeSize": "16",
-						"VolumeType": "gp2"
+				"ImageId" : "ami-9887c6e7",
+				"KeyName" : "MyKeyPair",
+				"BlockDeviceMappings" : [
+					{
+						"DeviceName" : "/dev/sda1",
+						"Ebs" : {
+							"VolumeSize" : "16",
+							"VolumeType" : "gp2"
+						}
 					}
-				}],
-				"Tags": [{
-					"Key": "Name",
-					"Value": {
-						"Ref": "EC2Name"
+				],
+				"Tags" : [
+					{
+						"Key" : "Name",
+						"Value" : {"Ref":"EC2Name"}
 					}
+				],
+				"SecurityGroupIds" : [{
+					"Ref" : "EC2SecurityGroup"
+
 				}],
-				"SecurityGroupIds": [{
-					"Ref": "EC2SecurityGroup"
-				}],
-				"SubnetId": {
-					"Ref": "SubnetId1"
+				"SubnetId" : {
+					"Ref":"SubnetId1"
 				}
+
+
 			}
 		},
-		"WebServerSecurityGroup": {
-			"Type": "AWS::EC2::SecurityGroup",
-			"Properties": {
-				"GroupName": "csye6225-webapp",
-				"GroupDescription": "Access to ports 22, 80 & 443",
-				"VpcId": {
-					"Ref": "VpcId"
-				},
-				"SecurityGroupIngress": [{
-						"IpProtocol": "tcp",
-						"FromPort": "22",
-						"ToPort": "22",
-						"CidrIp": "0.0.0.0/0"
-					},
-					{
-						"IpProtocol": "tcp",
-						"FromPort": "80",
-						"ToPort": "80",
-						"CidrIp": "0.0.0.0/0"
-					},
-					{
-						"IpProtocol": "tcp",
-						"FromPort": "443",
-						"ToPort": "443",
-						"CidrIp": "0.0.0.0/0"
-					}
-				]
+		"WebServerSecurityGroup" : {
+			"Type" : "AWS::EC2::SecurityGroup",
+			"Properties" : {
+				"GroupName" : "csye6225-webapp",
+				"GroupDescription" : "Access to ports 22, 80 & 443",
+				"VpcId": {"Ref":"VpcId"},
+				"SecurityGroupIngress" : [ {
+					"IpProtocol" : "tcp",
+					"FromPort" : "22",
+					"ToPort" : "22",
+				"CidrIp" : "0.0.0.0/0" },
+				{
+					"IpProtocol" : "tcp",
+					"FromPort" : "80",
+					"ToPort" : "80",
+				"CidrIp" : "0.0.0.0/0" },
+				{
+					"IpProtocol" : "tcp",
+					"FromPort" : "443",
+					"ToPort" : "443",
+					"CidrIp" : "0.0.0.0/0"
+				} ]
 			}
 		},
 		"DBEC2SecurityGroup": {
 			"Type": "AWS::EC2::SecurityGroup",
-			"Properties": {
+			"Properties" : {
 				"GroupName": "csye6225-rds",
 				"GroupDescription": "Open database for access",
-				"SecurityGroupIngress": [{
-					"IpProtocol": "tcp",
-
-					"FromPort": "3306",
-					"ToPort": "3306",
-					"SourceSecurityGroupId": {
-						"Ref": "EC2SecurityGroup"
-					}
+				"SecurityGroupIngress" : [{
+					"IpProtocol" : "tcp",
+					"FromPort" : "3306",
+					"ToPort" : "3306",
+					"SourceSecurityGroupId" : { "Ref" : "EC2SecurityGroup" }
 				}],
-				"VpcId": {
-					"Ref": "VpcId"
-				}
+				"VpcId": {"Ref":"VpcId"}
 			}
+
 		},
 		"myDynamoDB": {
 			"Type": "AWS::DynamoDB::Table",
@@ -116,9 +119,17 @@
 		"myS3Bucket": {
 			"Type": "AWS::S3::Bucket",
 			"Properties": {
-				"BucketName": "csye6225-fall2018-jethvaa.me.csye6225.com"
+				"BucketName": {"Ref":"Bucketname"}
 			}
 		},
+		"myDBSubnetGroup": {
+                        "Type": "AWS::RDS::DBSubnetGroup",
+                        "Properties": {
+                                "DBSubnetGroupDescription": "description",
+                                "SubnetIds":[{"Ref":"SubnetId1"},{"Ref":"SubnetId2" }]
+                        }
+                },
+
 		"MyDB": {
 			"Type": "AWS::RDS::DBInstance",
 			"Properties": {
@@ -133,17 +144,9 @@
 				},
 				"PubliclyAccessible": "false",
 				"DBName": "myDB",
-				"VPCSecurityGroups":["sg-06a2961ce1a9797ea"]
-			}
-		},
-		"myDBSubnetGroup": {
-			"Type": "AWS::RDS::DBSubnetGroup",
-			"Properties": {
-				"DBSubnetGroupDescription": "description",
-				"SubnetIds": ["subnet-01647a22a1db11add", "subnet-0249025bb00acbf7f" ]
+				"VPCSecurityGroups":[{"Ref" : "EC2SecurityGroup"}]
 			}
 		}
+
 	}
-
 }
-

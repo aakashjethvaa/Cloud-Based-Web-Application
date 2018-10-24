@@ -66,10 +66,10 @@
 	    "Type" : "AWS::EC2::VPC",
 	    "Properties" : {
 	        "CidrBlock" : { "Ref" : "CidrBlock" },
-		"EnableDnsSupport" : "true",
- 		"EnableDnsHostnames" : "true",
+		    "EnableDnsSupport" : "true",
+ 		    "EnableDnsHostnames" : "true",
       		"InstanceTenancy" : "default",
-		"Tags" : [ {"Key" : "Name", "Value" : { "Ref" : "VpcName" }} ]
+		    "Tags" : [ {"Key" : "Name", "Value" : { "Ref" : "VpcName" }} ]
 		    }
        },
     "PublicSubnet1" : {
@@ -78,17 +78,17 @@
  	        "AvailabilityZone" : { "Ref" : "AvailabilityZone1" },
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : { "Ref" : "PublicCidrBlock1" },
-		"MapPublicIpOnLaunch" : true,
+            "MapPublicIpOnLaunch" : true,
 	        "Tags" : [ {"Key" : "Name", "Value" : { "Ref" : "publicSubnet1" } } ]
 	      }
 	    },
     "PublicSubnet2" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
-		"AvailabilityZone" : { "Ref" : "AvailabilityZone2" },
+		    "AvailabilityZone" : { "Ref" : "AvailabilityZone2" },
 	        "VpcId" : { "Ref" : "VPC" },
-	        "CidrBlock" : { "Ref" : "PublicCidrBlock2" },
-		"MapPublicIpOnLaunch" : true,
+            "CidrBlock" : { "Ref" : "PublicCidrBlock2" },
+		    "MapPublicIpOnLaunch" : true,
 	        "Tags" : [ {"Key" : "Name", "Value" : { "Ref" : "publicSubnet2" } } ]
 	      }
 	    },	
@@ -96,20 +96,20 @@
     "PublicSubnet3" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
-		"AvailabilityZone" : { "Ref" : "AvailabilityZone3" },
+		    "AvailabilityZone" : { "Ref" : "AvailabilityZone3" },
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : { "Ref" : "PublicCidrBlock3" },
-		"MapPublicIpOnLaunch" : true,
+            "MapPublicIpOnLaunch" : true,
 	        "Tags" : [ {"Key" : "Name", "Value" : { "Ref" : "publicSubnet3" } } ]
 	      }
 	    },
     "PrivateSubnet1" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
-		"AvailabilityZone" : { "Ref" : "AvailabilityZone1" },
+		    "AvailabilityZone" : { "Ref" : "AvailabilityZone1" },
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : { "Ref" : "PrivateCidrBlock1" },
-		"MapPublicIpOnLaunch" : false,
+		    "MapPublicIpOnLaunch" : false,
 	        "Tags" : [ {"Key" : "Name", "Value" : { "Ref" : "privateSubnet1" }  } ]
 	      }
 	    },
@@ -117,10 +117,10 @@
     "PrivateSubnet2" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
-		"AvailabilityZone" : { "Ref" : "AvailabilityZone2" },
+		    "AvailabilityZone" : { "Ref" : "AvailabilityZone2" },
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : { "Ref" : "PrivateCidrBlock2" },
-		"MapPublicIpOnLaunch" : false,
+            "MapPublicIpOnLaunch" : false,
 	        "Tags" : [ {"Key" : "Name", "Value" : { "Ref" : "privateSubnet2" } } ]
 	      }
 	    },
@@ -128,17 +128,17 @@
     "PrivateSubnet3" : {
 	    "Type" : "AWS::EC2::Subnet",
 	    "Properties" : {
-		"AvailabilityZone" : { "Ref" : "AvailabilityZone3" },
+		    "AvailabilityZone" : { "Ref" : "AvailabilityZone3" },
 	        "VpcId" : { "Ref" : "VPC" },
 	        "CidrBlock" : { "Ref" : "PrivateCidrBlock3" },
-		"MapPublicIpOnLaunch" : false,
+		    "MapPublicIpOnLaunch" : false,
 	        "Tags" : [ {"Key" : "Name", "Value" : { "Ref" : "privateSubnet3" } } ]
 	      }
 	    },
     "InternetGateway" : {
 	      "Type" : "AWS::EC2::InternetGateway",
 	      "Properties" : {
-	        "Tags" : [ {"Key" : "Name", "Value" : { "Ref" : "InternetGatewayName" } } ]
+            "Tags" : [ {"Key" : "Name", "Value" : { "Ref" : "InternetGatewayName" } } ]
 	      }
 	    },
 		
