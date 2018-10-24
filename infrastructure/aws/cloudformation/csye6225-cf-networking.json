@@ -38,7 +38,7 @@
         "PrivateCidrBlock1": {
 			"Type": "String"
 		},
-		"PrivateCidrBlock2": {
+        "PrivateCidrBlock2": {
 			"Type": "String"
 		},
 		"PrivateCidrBlock3": {
