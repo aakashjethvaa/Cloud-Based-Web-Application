@@ -148,13 +148,13 @@
         "S3" : {
             "Type" : "AWS::S3::Bucket",
             "Properties" : {
-              "BucketName" : "jethvaaakash.me"
+              "BucketName" : "jethvaa1.me"
             }
           },
           "CS3" : {
             "Type" : "AWS::S3::Bucket",
             "Properties" : {
-              "BucketName" : "jethvaakash.me"
+              "BucketName" : "jethvaa1.me"
             }
           },
       
