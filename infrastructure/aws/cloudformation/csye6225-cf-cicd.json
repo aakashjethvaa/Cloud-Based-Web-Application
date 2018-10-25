@@ -31,9 +31,6 @@
     },
     "TravisCodeDeployPolicyName":{
       "Type":"String"
-    },
-    "EC2Name":{
-      "Type":"String"
     }
   },
   "Resources": {
@@ -278,14 +275,7 @@
             "ourCodeDeployServiceRole",
             "Arn"
           ]
-        },
-	 "Tags": [{
-                                        "Key": "Name",
-                                        "Value": {
-                                                "Ref": "EC2Name"
-                                        }
-                                }]
-
+        }
       }
     }
   }
