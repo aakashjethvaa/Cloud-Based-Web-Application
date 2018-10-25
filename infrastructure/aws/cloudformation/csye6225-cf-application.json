@@ -76,7 +76,9 @@
 							[
 								"#!/bin/bash -xe \n",
 								"sudo apt-get update \n",
-                                                                "sudo apt-get install ruby ntp wget java-1.8.0-openjdk-devel -y"
+								"sudo apt-get install openjdk-8-jdk -y\n",
+                                                                "apt-get install ruby -y \n",
+								"sudo apt-get install wget -y \n",
 								"sudo apt-get install python -y \n",
 								"sudo apt-get update \n",
 								"sudo wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install \n",
