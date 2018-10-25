@@ -41,7 +41,7 @@ public class ReceiptController {
         System.out.println("Local Environment");
 
         JsonObject json = new JsonObject();
-        String filePath = "/Users/hemantkamath/Desktop/Pic";
+        String filePath = "/home/aakash/Documents/";
         String fileName = file.getOriginalFilename();
         String NewPath = filePath + fileName;
         System.out.println("PATH IS " + filePath);
@@ -207,7 +207,7 @@ public class ReceiptController {
 
         JsonObject json = new JsonObject();
 
-        String filePath = "Users/hemantkamath/Desktop/Pic";
+        String filePath = "/home/aakash/Documents/";
         String fileName = file.getOriginalFilename();
         String NewPath = filePath + fileName;
         System.out.println("PATH IS " + filePath);
