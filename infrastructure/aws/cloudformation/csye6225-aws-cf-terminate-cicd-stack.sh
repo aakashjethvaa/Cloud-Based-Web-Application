@@ -1,4 +1,7 @@
 STACK_NAME=$1
+echo Enter S3 bucket name
+read bucket_name
+aws s3 rb s3://$bucket_name --force
 
 aws cloudformation delete-stack --stack-name $STACK_NAME
 
