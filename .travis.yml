@@ -98,7 +98,7 @@ deploy:
     access_key_id: $access_key_id
     secret_access_key: $secret_access_key
     # on:
-    #   branch: master
+    #   branch: TestBranch
   - provider: codedeploy
     access_key_id: $access_key_id
     bucket: $s3_bucket
@@ -109,5 +109,5 @@ deploy:
     region: us-east-1
     secret_access_key: $secret_access_key
     wait-until-deployed: true
-#     on:
-#       branch: assignment05_06
+     on:
+       branch: TestBranch
