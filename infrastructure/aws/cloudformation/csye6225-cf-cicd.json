@@ -280,11 +280,11 @@
           ]
         },
 	 "Tags": [{
-                                        "Key": "Name",
-                                        "Value": {
-                                                "Ref": "EC2Name"
-                                        }
-                                }]
+                   "Key": "Name",
+                   "Value": {
+                   "Ref": "EC2Name"
+                   }
+                     }]
 
       }
     }
