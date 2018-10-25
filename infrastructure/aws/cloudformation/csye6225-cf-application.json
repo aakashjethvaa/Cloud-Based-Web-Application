@@ -65,10 +65,11 @@
 			"Type": "AWS::EC2::Instance",
 			"Properties": {
 				"InstanceType": "t2.micro",
-				"DisableApiTermination": true,
+				"DisableApiTermination": "false",
 				"ImageId": {
 					"Ref": "AMIImage"
 				},
+				"KeyName":"MyKeyPair",
 				"UserData": {
 					"Fn::Base64": {
 						"Fn::Join": [
