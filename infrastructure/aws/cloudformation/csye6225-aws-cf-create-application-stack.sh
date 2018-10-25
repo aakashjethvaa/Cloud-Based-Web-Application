@@ -11,7 +11,7 @@ DB_NAME="csye6225"
 DB_INSTANCE_CLASS="db.t2.medium"
 DB_INSTANCE_IDENTIFIER="csye6225-fall2018"
 DB_ENGINE="MySQL"
-BUCKET_NAME="jethvaa1.me"
+BUCKET_NAME="panchal.me"
 
 export vpcId=$(aws ec2 describe-vpcs --query "Vpcs[*].[CidrBlock, VpcId]" --output text|grep 10.0.0.0/16|awk '{print $2}')
 echo "VpcId : ${vpcId}"
