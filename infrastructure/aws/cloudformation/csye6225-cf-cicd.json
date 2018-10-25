@@ -279,14 +279,13 @@
             "Arn"
           ]
         },
-	 "Tags": [{
-                   "Key": "Name",
-                   "Value": {
-                   "Ref": "EC2Name"
-                   }
-                     }]
-
-      }
+	"ec2TagFilters": [{
+            "Type": "KEY_AND_VALUE",
+            "Key": "Name",
+            "Value": {
+            "Ref" : "EC2Name"
+        }
+	}]
     }
   }
 }
