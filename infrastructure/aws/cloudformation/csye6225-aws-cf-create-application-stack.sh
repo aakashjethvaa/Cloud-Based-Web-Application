@@ -11,9 +11,11 @@ DB_NAME="csye6225"
 DB_INSTANCE_CLASS="db.t2.medium"
 DB_INSTANCE_IDENTIFIER="csye6225-fall2018"
 DB_ENGINE="MySQL"
+
 echo "Enter Bucket Name"
 read B_NAME
 BUCKET_NAME="code-deploy.$B_NAME.me"
+
 export vpcId=$(aws ec2 describe-vpcs --query "Vpcs[*].[CidrBlock, VpcId]" --output text|grep 10.0.0.0/16|awk '{print $2}')
 echo "VpcId : ${vpcId}"
 export subnetId1=$(aws ec2 describe-subnets --query 'Subnets[*].[SubnetId, VpcId, AvailabilityZone, CidrBlock]' --output text|grep 10.0.1.0/24|grep us-east-1a|awk '{print $1}')
