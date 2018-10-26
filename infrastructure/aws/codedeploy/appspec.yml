@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 
 files:             
-  - source: ./webapp/target/ROOT-2.0.5.RELEASE.war
+  - source: ./webapp/target/ROOT-1-2.0.5.RELEASE.war
     destination: /opt/tomcat/webapps
 
 hooks:
