@@ -10,7 +10,7 @@ public class CloudAssignment2Application extends SpringBootServletInitializer {
 
         @Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
-		return builder.sources(CloudApplication.class);
+		return builder.sources(CloudAssigment2Application.class);
 	}
     public static void main(String[] args) {
         SpringApplication.run(CloudAssignment2Application.class, args);
