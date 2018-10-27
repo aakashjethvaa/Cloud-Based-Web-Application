@@ -1,6 +1,6 @@
 {
 	"AWSTemplateFormatVersion": "2010-09-09",
-	"Description": "Cloud Formation Template - Creating the VPC, Subnets, Route Table, Route and Security Groups",
+	"Description": "Cloud Formation Template - Creating VPC, Subnets, Route Table, Route and Security Groups",
 	"Parameters": {
 		"VPCName": {
 			"Type": "String"
@@ -12,7 +12,8 @@
 			"Type": "String"
 		},
 		"SubnetName3": {
-			"Type": "String"
+			
+			"Type":"String"
 		},
 		"SubnetName4": {
 			"Type": "String"
