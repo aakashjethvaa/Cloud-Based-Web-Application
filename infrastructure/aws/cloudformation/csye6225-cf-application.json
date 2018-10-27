@@ -121,7 +121,7 @@
 								"#systemctl enable cloudwatch.service",
 								"systemctl enable tomcat.service",
 								"systemctl start tomcat.service",
-								"#echo \"export JAVA_OPTS=\\\"\\$JAVA_OPTS -Dspring.profiles.active=aws\\\"\" >> /usr/lib/systemd/system/setenv.sh \n",
+								"echo \"export JAVA_OPTS=\\\"\\$JAVA_OPTS -Dspring.profiles.active=aws\\\"\"  >> tomcat.service",
 								{
 									"Fn::Join": [
 										"", [
@@ -136,7 +136,7 @@
 											{
 												"Ref": "DBName"
 											},
-											"\"\"'>> /usr/lib/systemd/system/setenv.sh \n"
+											"\"\"' >> tomcat.service"
 										]
 									]
 								},
@@ -144,33 +144,17 @@
 								{
 									"Ref": "MasterUsername"
 								},
-								"\"\"' >> /usr/lib/systemd/system/setenv.sh \n",
+								"\"\"' >> tomcat.service",
 								"echo 'export JAVA_OPTS=\"$JAVA_OPTS -Dspring.datasource.password=\"",
 								{
 									"Ref": "MasterUserPwd"
 								},
-								"\"\"' >> //usr/lib/systemd/system/setenv.sh \n",
+								"\"\"' >> tomcat.service",
 								"echo 'export JAVA_OPTS=\"$JAVA_OPTS -Damazon.s3.default-bucket=\"",
 								{
 									"Ref": "BucketName"
 								},
-								"service tomcat8 restart \n",
-								{
-									"Fn::Join": [
-										"", [
-											"debconf-set-selections <<< 'mysql-server mysql-server/root_password password=root'"
-										]
-									]
-								},
-								{
-									"Fn::Join": [
-										"", [
-											"debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password=root'"
-										]
-									]
-								},
-								"service tomcat8 restart \n",
-								"yum install mysql-server \n"
+								
 							]
 						]
 					}
