@@ -6,7 +6,7 @@ aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME
 
 if [ $? -ne "0" ]
 then 
-	echo "Termination of AWS CloudFormation Stack failed"
+	echo "Deletion of Stack failed"
 else
-	echo "Termination of AWS CloudFormation Stack Success"
+	echo "Deletion of Stack Success"
 fi
