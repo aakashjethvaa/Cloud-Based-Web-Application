@@ -69,7 +69,7 @@
 				"ImageId": {
 					"Ref": "AMIImage"
 				},
-				"KeyName":"MyKeyPair",
+				"KeyName": "MyKeyPair",
 				"UserData": {
 					"Fn::Base64": {
 						"Fn::Join": [
@@ -153,8 +153,8 @@
 								"echo 'export JAVA_OPTS=\"$JAVA_OPTS -Damazon.s3.default-bucket=\"",
 								{
 									"Ref": "BucketName"
-								},
-								
+								}
+
 							]
 						]
 					}
