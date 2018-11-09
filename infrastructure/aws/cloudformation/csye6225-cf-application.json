@@ -1,4 +1,3 @@
-
 {
 	"AWSTemplateFormatVersion": "2010-09-09",
 	"Description": "Cloud Formation Template - CSYE6225 - Creating EC2 instance , Security Groups and Ingress Rules",
@@ -9,20 +8,56 @@
 		"EC2SecurityGroup": {
 			"Type": "String"
 		},
-		"SubnetId1":{
-			"Type":"String"
+		"SubnetId1": {
+			"Type": "String"
 		},
-		"SubnetId2":{
-			"Type":"String"
+		"VpcId": {
+			"Type": "String"
 		},
-		"VpcId":{
-			"Type":"String"
+		"EC2VolumeSize": {
+			"Type": "String"
 		},
-		"KeyName":{
-			"Type":"String"
+		"EC2VolumeType": {
+			"Type": "String"
 		},
-		"Bucketname":{
-			"Type":"String"
+		"AMIImage": {
+			"Type": "String"
+		},
+		"DynamoDBName": {
+			"Type": "String"
+		},
+		"BucketName": {
+			"Type": "String"
+		},
+		"MasterUsername": {
+			"Type": "String"
+		},
+		"MasterUserPwd": {
+			"Type": "String"
+		},
+		"DBName": {
+			"Type": "String"
+		},
+		"DBInstanceClass": {
+			"Type": "String"
+		},
+		"DBInstanceIdentifier": {
+			"Type": "String"
+		},
+		"DBEngine": {
+			"Type": "String"
+		},
+		"SubnetId2": {
+			"Type": "String"
+		},
+		"SubnetId3": {
+			"Type": "String"
+		},
+		"RDSSecurityGroup": {
+			"Type": "String"
+		},
+		"EC2RoleName": {
+			"Type": "String"
 		}
 	},
 	"Resources": {
@@ -30,123 +65,215 @@
 			"Type": "AWS::EC2::Instance",
 			"Properties": {
 				"InstanceType": "t2.micro",
-				"ImageId" : "ami-9887c6e7",
-				"KeyName" : "MyKeyPair",
-				"BlockDeviceMappings" : [
-					{
-						"DeviceName" : "/dev/sda1",
-						"Ebs" : {
-							"VolumeSize" : "16",
-							"VolumeType" : "gp2"
+				"DisableApiTermination": "false",
+				"ImageId": {
+					"Ref": "AMIImage"
+				},
+				"KeyName": "MyKeyPair",
+				"UserData": {
+					"Fn::Base64": {
+						"Fn::Join": [
+							"\n",
+							[
+								"#!/bin/bash -xe ",
+								"yum install ruby ntp wget java-1.8.0-openjdk-devel -y",
+								"wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install \n",
+								"chmod +x ./install \n",
+								"./install auto \n",
+								"service codedeploy-agent start \n",
+								"systemctl start ntpd",
+								"systemctl enable ntpd",
+								"groupadd tomcat",
+								"useradd -M -s /bin/nologin -g tomcat -d /opt/tomcat tomcat",
+								"cd /tmp",
+								"wget http://apache.mirrors.pair.com/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34.tar.gz",
+								"mkdir /opt/tomcat",
+								"tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1",
+								"cd /opt/tomcat",
+								"chgrp -R tomcat /opt/tomcat",
+								"chmod -R g+r conf",
+								"chmod g+x conf",
+								"chown -R tomcat webapps/ work/ temp/ logs/",
+								"cd /usr/lib/systemd/system",
+								"touch tomcat.service",
+								"echo '[Unit]' > tomcat.service",
+								"echo 'Description=Apache Tomcat Web Application Container' >> tomcat.service",
+								"echo 'After=syslog.target network.target' >> tomcat.service",
+								"echo '[Service]' >> tomcat.service",
+								"echo 'Type=forking' >> tomcat.service",
+								"echo 'Environment=JAVA_HOME=/usr/lib/jvm/jre' >> tomcat.service",
+								"echo 'Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid' >> tomcat.service",
+								"echo 'Environment=CATALINA_HOME=/opt/tomcat' >> tomcat.service",
+								"echo 'Environment=CATALINA_BASE=/opt/tomcat' >> tomcat.service",
+								"echo 'Environment=\"CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC\"' >> tomcat.service",
+								"echo 'Environment=\"JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom\"' >> tomcat.service",
+								"echo 'ExecStart=/opt/tomcat/bin/startup.sh' >> tomcat.service",
+								"echo 'ExecStop=/bin/kill -15 $MAINPID' >> tomcat.service",
+								"echo 'User=tomcat' >> tomcat.service",
+								"echo 'Group=tomcat' >> tomcat.service",
+								"echo 'UMask=0007' >> tomcat.service",
+								"echo 'RestartSec=10' >> tomcat.service",
+								"echo 'Restart=always' >> tomcat.service",
+								"echo '[Install]' >> tomcat.service",
+								"echo 'WantedBy=multi-user.target' >> tomcat.service",
+								"systemctl daemon-reload",
+								"#systemctl start cloudwatch.service",
+								"#systemctl enable cloudwatch.service",
+								"systemctl enable tomcat.service",
+								"systemctl start tomcat.service",
+								"echo \"export JAVA_OPTS=\\\"\\$JAVA_OPTS -Dspring.profiles.active=aws\"\" >> /opt/tomcat/bin/setenv.sh\n",
+								{
+									"Fn::Join": [
+										"", [
+											"echo ' export JAVA_OPTS=\"$JAVA_OPTS -Dspring.datasource.url=\"jdbc:mysql://",
+											{
+												"Fn::GetAtt": [
+													"ourRDSInstance",
+													"Endpoint.Address"
+												]
+											},
+											":3306/",
+											{
+												"Ref": "DBName"
+											},
+											"\"\" >> /opt/tomcat/bin/setenv.sh\n"
+										]
+									]
+								},
+								"echo 'export JAVA_OPTS=\"$JAVA_OPTS -Dspring.datasource.username=\"",
+								{
+									"Ref": "MasterUsername"
+								},
+								"\"\" >> /opt/tomcat/bin/setenv.sh\n",
+								"echo 'export JAVA_OPTS=\"$JAVA_OPTS -Dspring.datasource.password=\"",
+								{
+									"Ref": "MasterUserPwd"
+								},
+								"\"\" >> /opt/tomcat/bin/setenv.sh\n",
+								"echo 'export JAVA_OPTS=\"$JAVA_OPTS -Damazon.s3.default-bucket=\"",
+								{
+									"Ref": "BucketName"
+								},
+								"chmod +x /opt/tomcat/bin/setenv.sh\n",
+								"#systemctl daemon-reload\n",
+								"systemctl enable tomcat.service\n",
+								"systemctl start tomcat.service\n"
+							]
+						]
+					}
+				},
+				"BlockDeviceMappings": [{
+					"DeviceName": "/dev/sda1",
+					"Ebs": {
+						"DeleteOnTermination": true,
+						"VolumeSize": {
+							"Ref": "EC2VolumeSize"
+						},
+						"VolumeType": {
+							"Ref": "EC2VolumeType"
 						}
 					}
-				],
-				"Tags" : [
-					{
-						"Key" : "Name",
-						"Value" : {"Ref":"EC2Name"}
+				}],
+				"Tags": [{
+					"Key": "Name",
+					"Value": {
+						"Ref": "EC2Name"
 					}
-				],
-				"SecurityGroupIds" : [{
-					"Ref" : "EC2SecurityGroup"
-
 				}],
-				"SubnetId" : {
-					"Ref":"SubnetId1"
+				"SecurityGroupIds": [{
+					"Ref": "EC2SecurityGroup"
+				}],
+				"SubnetId": {
+					"Ref": "SubnetId1"
+				},
+				"IamInstanceProfile": {
+					"Ref": "ourIAMInstanceProfile"
 				}
-
-
 			}
 		},
-		"WebServerSecurityGroup" : {
-			"Type" : "AWS::EC2::SecurityGroup",
-			"Properties" : {
-				"GroupName" : "csye6225-webapp",
-				"GroupDescription" : "Access to ports 22, 80 & 443",
-				"VpcId": {"Ref":"VpcId"},
-				"SecurityGroupIngress" : [ {
-					"IpProtocol" : "tcp",
-					"FromPort" : "22",
-					"ToPort" : "22",
-				"CidrIp" : "0.0.0.0/0" },
-				{
-					"IpProtocol" : "tcp",
-					"FromPort" : "80",
-					"ToPort" : "80",
-				"CidrIp" : "0.0.0.0/0" },
-				{
-					"IpProtocol" : "tcp",
-					"FromPort" : "443",
-					"ToPort" : "443",
-					"CidrIp" : "0.0.0.0/0"
-				} ]
+		"ourIAMInstanceProfile": {
+			"Type": "AWS::IAM::InstanceProfile",
+			"Properties": {
+				"Path": "/",
+				"Roles": [{
+					"Ref": "EC2RoleName"
+				}]
 			}
 		},
-		"DBEC2SecurityGroup": {
-			"Type": "AWS::EC2::SecurityGroup",
-			"Properties" : {
-				"GroupName": "csye6225-rds",
-				"GroupDescription": "Open database for access",
-				"SecurityGroupIngress" : [{
-					"IpProtocol" : "tcp",
-					"FromPort" : "3306",
-					"ToPort" : "3306",
-					"SourceSecurityGroupId" : { "Ref" : "EC2SecurityGroup" }
-				}],
-				"VpcId": {"Ref":"VpcId"}
-			}
-
-		},
-		"myDynamoDB": {
+		"ourDynamoTable": {
 			"Type": "AWS::DynamoDB::Table",
 			"Properties": {
-				"AttributeDefinitions" :[
-					{
-					"AttributeName":"id",
-					"AttributeType":"S"
-					}],
 				"KeySchema": [{
 					"AttributeName": "id",
 					"KeyType": "HASH"
 				}],
+				"AttributeDefinitions": [{
+					"AttributeName": "id",
+					"AttributeType": "S"
+				}],
+				"TableName": {
+					"Ref": "DynamoDBName"
+				},
 				"ProvisionedThroughput": {
 					"ReadCapacityUnits": "5",
-					"WriteCapacityUnits": "10"
-				},
-				"TableName": "dynamodb"
+					"WriteCapacityUnits": "5"
+				}
 			}
 		},
-		"myS3Bucket": {
+		"ourS3Bucket": {
 			"Type": "AWS::S3::Bucket",
+			"Description": "S3 Bucket to store attachment files",
 			"Properties": {
-				"BucketName": {"Ref":"Bucketname"}
+				"AccessControl": "Private",
+				"BucketName": {
+					"Ref": "BucketName"
+				}
 			}
 		},
-		"myDBSubnetGroup": {
-                        "Type": "AWS::RDS::DBSubnetGroup",
-                        "Properties": {
-                                "DBSubnetGroupDescription": "description",
-                                "SubnetIds":[{"Ref":"SubnetId1"},{"Ref":"SubnetId2" }]
-                        }
-                },
-
-		"MyDB": {
+		"ourRDSDBSubnet": {
+			"Type": "AWS::RDS::DBSubnetGroup",
+			"Properties": {
+				"DBSubnetGroupDescription": "Subnet Group fro RDS Instance",
+				"SubnetIds": [{
+						"Ref": "SubnetId2"
+					},
+					{
+						"Ref": "SubnetId3"
+					}
+				]
+			}
+		},
+		"ourRDSInstance": {
 			"Type": "AWS::RDS::DBInstance",
 			"Properties": {
-				"AllocatedStorage":"100",
-				"DBInstanceClass": "db.t2.medium",
-				"Engine": "MySQL",
-				"MultiAZ": "false",
-				"MasterUsername": "csye6225master",
-				"MasterUserPassword": "csye6225password",
-				"DBSubnetGroupName": {
-					"Ref": "myDBSubnetGroup"
+				"AllocatedStorage": "10",
+				"MasterUsername": {
+					"Ref": "MasterUsername"
 				},
-				"PubliclyAccessible": "false",
-				"DBName": "myDB",
-				"VPCSecurityGroups":[{"Ref" : "EC2SecurityGroup"}]
+				"MasterUserPassword": {
+					"Ref": "MasterUserPwd"
+				},
+				"MultiAZ": false,
+				"PubliclyAccessible": false,
+				"DBName": {
+					"Ref": "DBName"
+				},
+				"DBInstanceClass": {
+					"Ref": "DBInstanceClass"
+				},
+				"DBInstanceIdentifier": {
+					"Ref": "DBInstanceIdentifier"
+				},
+				"Engine": {
+					"Ref": "DBEngine"
+				},
+				"DBSubnetGroupName": {
+					"Ref": "ourRDSDBSubnet"
+				},
+				"VPCSecurityGroups": [{
+					"Ref": "RDSSecurityGroup"
+				}]
 			}
 		}
-
 	}
 }

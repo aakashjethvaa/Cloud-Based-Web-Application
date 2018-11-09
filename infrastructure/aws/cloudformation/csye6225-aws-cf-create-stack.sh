@@ -1,53 +1,21 @@
-#!/bin/bash
+STACK_NAME=$1
+VPC_NAME=${STACK_NAME}-csye6225-vpc
+SUBNET1_NAME=${STACK_NAME}-csye6225-subnet1
+SUBNET2_NAME=${STACK_NAME}-csye6225-subnet2
+SUBNET3_NAME=${STACK_NAME}-csye6225-subnet3
+SUBNET4_NAME=${STACK_NAME}-csye6225-subnet4
+SUBNET5_NAME=${STACK_NAME}-csye6225-subnet5
+SUBNET6_NAME=${STACK_NAME}-csye6225-subnet6
+IG_NAME=${STACK_NAME}-csye6225-InternetGateway
+PUBLIC_ROUTE_TABLE=${STACK_NAME}-csye6225-public-route-table
 
-echo "Enter Stack Name"
-read stack_name
-echo "Enter VPC Name"
-read vpc_name
-echo "Enter CIDR Block"
-read cidr_block
-echo "Enter Public Subnet 1 name"
-read public_subnet_1
-echo "Enter Public Subnet 1 CIDR block"
-read public_cidr_1
-echo "Enter Public Subnet 2 name"
-read public_subnet_2
-echo "Enter Public Subnet 2 CIDR block"
-read public_cidr_2
-echo "Enter Public Subnet 3 name"
-read public_subnet_3
-echo "Enter Public Subnet 3 CIDR block"
-read public_cidr_3
-echo "Enter Private Subnet 1 name"
-read private_subnet_1
-echo "Enter Private Subnet 1 CIDR block"
-read private_cidr_1
-echo "Enter Private Subnet 2 name"
-read private_subnet_2
-echo "Enter Private Subnet 2 CIDR block"
-read private_cidr_2
-echo "Enter Private Subnet 3 name"
-read private_subnet_3
-echo "Enter Private Subnet 3 CIDR block"
-read private_cidr_3
-echo "Enter Availability Zone 1"
-read az_1
-echo "Enter Availability Zone 2"
-read az_2
-echo "Enter Availability Zone 3"
-read az_3
+aws cloudformation create-stack --stack-name $STACK_NAME --template-body file://csye6225-cf-networking.json --parameters ParameterKey=VPCName,ParameterValue=$VPC_NAME ParameterKey=SubnetName1,ParameterValue=$SUBNET1_NAME ParameterKey=SubnetName2,ParameterValue=$SUBNET2_NAME ParameterKey=SubnetName3,ParameterValue=$SUBNET3_NAME ParameterKey=SubnetName4,ParameterValue=$SUBNET4_NAME ParameterKey=SubnetName5,ParameterValue=$SUBNET5_NAME ParameterKey=SubnetName6,ParameterValue=$SUBNET6_NAME ParameterKey=IGName,ParameterValue=$IG_NAME ParameterKey=PubicRouteTableName,ParameterValue=$PUBLIC_ROUTE_TABLE
 
-InternetGateway=$stack_name"InternetGateway"
-RouteTable=$stack_name"PublicRouteTable"
+aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
 
-
-echo "Creating CloudFormation Stack"
-
-aws cloudformation create-stack --stack-name $stack_name --template-body file://csye6225-cf-networking.json --parameters ParameterKey=VpcName,ParameterValue=$vpc_name ParameterKey=CidrBlock,ParameterValue=$cidr_block ParameterKey=publicSubnet1,ParameterValue=$public_subnet_1 ParameterKey=PublicCidrBlock1,ParameterValue=$public_cidr_1 ParameterKey=publicSubnet2,ParameterValue=$public_subnet_2 ParameterKey=PublicCidrBlock2,ParameterValue=$public_cidr_2 ParameterKey=publicSubnet3,ParameterValue=$public_subnet_3 ParameterKey=PublicCidrBlock3,ParameterValue=$public_cidr_3 ParameterKey=privateSubnet1,ParameterValue=$private_subnet_1 ParameterKey=PrivateCidrBlock1,ParameterValue=$private_cidr_1 ParameterKey=privateSubnet2,ParameterValue=$private_subnet_2 ParameterKey=PrivateCidrBlock2,ParameterValue=$private_cidr_2 ParameterKey=privateSubnet3,ParameterValue=$private_subnet_3 ParameterKey=PrivateCidrBlock3,ParameterValue=$private_cidr_3 ParameterKey=AvailabilityZone1,ParameterValue=$az_1 ParameterKey=AvailabilityZone2,ParameterValue=$az_2 ParameterKey=AvailabilityZone3,ParameterValue=$az_3 ParameterKey=InternetGatewayName,ParameterValue=$InternetGateway ParameterKey=RouteTableName,ParameterValue=$RouteTable
-
-echo "Completed Creation of Cloud Formation"
-
-
-
-
-
+if [ $? -ne "0" ]
+then 
+	echo "Creation of Stack fai"
+else
+	echo "Creation of Stack Suc"
+fi
