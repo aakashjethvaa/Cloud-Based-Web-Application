@@ -6,7 +6,7 @@ Team Member Details:
 4. Aakash Jethva jethva.a@husky.neu.edu
 
 Web Application:
-Technologies : Sts eclipse, IntelliJ, Postman, Sql Workbench, Maria DB
+Technologies : Sts eclipse, IntelliJ, Postman, Sql Workbench, MySQL DB
 
 Using JPA annotations first created a User Pojo 
 Later Extended JPA Repository to User Repository
@@ -43,7 +43,7 @@ Web Application
 
 -Returning Successful API calls
 -Storing image on the local disk and application S3 bucket
--Updatet the application.json
+-Update the application.json
 -Handling all the API Validations
 -Adding the AWS configuration to the Web application
 

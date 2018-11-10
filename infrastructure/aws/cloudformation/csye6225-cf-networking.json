@@ -12,7 +12,8 @@
 			"Type": "String"
 		},
 		"SubnetName3": {
-			"Type": "String"
+			
+			"Type":"String"
 		},
 		"SubnetName4": {
 			"Type": "String"

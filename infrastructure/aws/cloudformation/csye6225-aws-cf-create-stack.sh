@@ -15,7 +15,7 @@ aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
 
 if [ $? -ne "0" ]
 then 
-	echo "Creation of Stack failed"
+	echo "Creation of Stack fai"
 else
-	echo "Creation of Stack Success"
+	echo "Creation of Stack Suc"
 fi
