@@ -229,6 +229,11 @@ public class UserController {
         @PostMapping("/transaction/{id}/attachment")
         public ResponseEntity<Object> uploadAttachment(@PathVariable(value="id") Long id, @RequestPart(value="file") MultipartFile file){
 
+        String mimeType = file.getContentType();
+        String type = mimeType.split("/")[0];
+        if(!type.equalsIgnoreCase("image")) {
+            return ResponseEntity.badRequest().body("Only images allowed");
+        }
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user = userRepository.findByEmail(auth.getName());
             Optional<Transaction> trn = trsnRepo.findById(id);
@@ -249,12 +254,6 @@ public class UserController {
 
         @PutMapping("/transaction/{id}/attachment/{aid}")
         public ResponseEntity<Object> uploadAttachment(@PathVariable(value="id") Long id,@PathVariable(value="aid") Long aid, @RequestPart(value="file") MultipartFile file){
-
-            String mimeType = file.getContentType();
-            String type = mimeType.split("/")[0];
-            if(!type.equalsIgnoreCase("image")){
-                return ResponseEntity.badRequest().body("Only images allowed");
-            }            
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user = userRepository.findByEmail(auth.getName());
