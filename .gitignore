@@ -109,5 +109,5 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-/webapp/src/main/resources/application.properties
-/webapp/src/main/resources/application-dev.properties
+*/webapp/src/main/resources/application.properties
+*/webapp/src/main/resources/application-dev.properties
