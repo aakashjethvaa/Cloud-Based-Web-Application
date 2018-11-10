@@ -32,7 +32,6 @@
 		"TravisCodeDeployPolicyName": {
 			"Type": "String"
 		}
-
 	},
 	"Resources": {
 		"ourCodeDeployServiceRole": {
