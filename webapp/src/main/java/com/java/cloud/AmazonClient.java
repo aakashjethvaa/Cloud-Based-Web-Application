@@ -1,3 +1,4 @@
+
 package com.java.cloud;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -78,18 +79,10 @@ public class AmazonClient {
         return fileUrl;
     }
 
-
-
-
-
-
     public String deleteFileFromS3Bucket(String fileUrl) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
         s3client.deleteObject(new DeleteObjectRequest(bucketName + "/", fileName));
         return "Successfully deleted";
     }
-
-
-
 
 }

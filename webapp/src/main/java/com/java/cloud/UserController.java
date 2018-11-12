@@ -1,3 +1,5 @@
+
+
 package com.java.cloud;
 
 import java.io.File;
@@ -98,7 +100,7 @@ public class UserController {
 
     @RequestMapping("/api/ping")
     public String getPing() {
-            return "OK";
+        return "OK";
     }
 
     @RequestMapping(value = "/transaction", method = RequestMethod.POST)
@@ -149,7 +151,6 @@ public class UserController {
         List<Transaction> txns = trsnRepo.findByUser(user);
         Optional<Transaction> cr = null;
         /*for(Transaction txn : txns){
-
             if(txn.getId()==id){
                  currentTransaction = txn;
             }
@@ -183,15 +184,12 @@ public class UserController {
         List<Transaction> txns = trsnRepo.findByUser(user);
 
         /*for(Transaction txn : txns){
-
-
             if(txn.getId().toString().equals(id.toString())){
                 currentTransaction = txn;
             }
         }*/
         Optional<Transaction> cr = null;
         /*for(Transaction txn : txns){
-
             if(txn.getId()==id){
                  currentTransaction = txn;
             }
@@ -204,122 +202,122 @@ public class UserController {
     }
 
 
-        @GetMapping("/transaction/{id}/attachment")
-        public ResponseEntity<Object> getAttachment(@PathVariable(value="id") Long id){
+    @GetMapping("/transaction/{id}/attachment")
+    public ResponseEntity<Object> getAttachment(@PathVariable(value="id") Long id){
 
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            User user = userRepository.findByEmail(auth.getName());
-            Optional<Transaction> trn = trsnRepo.findById(id);
-            Transaction crtrn = trn.get();
-            if(crtrn.getUser().getId() != user.getId()){
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-            List<Attachment> attachments = crtrn.getAttachments();
-            List<String> attstr = new ArrayList<String>();
-            for(Attachment a : attachments){
-                String ste = a.getId()+":"+a.getUrl();
-                attstr.add(ste);
-            }
-            Gson gson = new Gson();
-            String atts= gson.toJson(attstr);
-
-            return ResponseEntity.ok(atts);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(auth.getName());
+        Optional<Transaction> trn = trsnRepo.findById(id);
+        Transaction crtrn = trn.get();
+        if(crtrn.getUser().getId() != user.getId()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        List<Attachment> attachments = crtrn.getAttachments();
+        List<String> attstr = new ArrayList<String>();
+        for(Attachment a : attachments){
+            String ste = a.getId()+":"+a.getUrl();
+            attstr.add(ste);
+        }
+        Gson gson = new Gson();
+        String atts= gson.toJson(attstr);
 
-        @PostMapping("/transaction/{id}/attachment")
-        public ResponseEntity<Object> uploadAttachment(@PathVariable(value="id") Long id, @RequestPart(value="file") MultipartFile file){
+        return ResponseEntity.ok(atts);
+    }
+
+    @PostMapping("/transaction/{id}/attachment")
+    public ResponseEntity<Object> uploadAttachment(@PathVariable(value="id") Long id, @RequestPart(value="file") MultipartFile file){
 
         String mimeType = file.getContentType();
-        String type =mimeType.split("/")[0];
+        String type = mimeType.split("/")[0];
         if(!type.equalsIgnoreCase("image")){
-            return ResponseEntity.badRequest().body("Only Images allowed");
+            return ResponseEntity.badRequest().body("Only images allowed");
         }
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            User user = userRepository.findByEmail(auth.getName());
-            Optional<Transaction> trn = trsnRepo.findById(id);
-            Transaction crtrn = trn.get();
-            if(crtrn.getUser().getId() != user.getId()){
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-
-            String fileUrl = uploadReceipt(file,this.amazonClient.getProfilename());
-            Attachment att = new Attachment();
-            att.setUrl(fileUrl);
-            att.setTransaction(crtrn);
-            crtrn.getAttachments().add(att);
-            trsnRepo.save(crtrn);
-
-            return ResponseEntity.ok(fileUrl);
+        User user = userRepository.findByEmail(auth.getName());
+        Optional<Transaction> trn = trsnRepo.findById(id);
+        Transaction crtrn = trn.get();
+        if(crtrn.getUser().getId() != user.getId()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        @PutMapping("/transaction/{id}/attachment/{aid}")
-        public ResponseEntity<Object> uploadAttachment(@PathVariable(value="id") Long id,@PathVariable(value="aid") Long aid, @RequestPart(value="file") MultipartFile file){
+        String fileUrl = uploadReceipt(file,this.amazonClient.getProfilename());
+        Attachment att = new Attachment();
+        att.setUrl(fileUrl);
+        att.setTransaction(crtrn);
+        crtrn.getAttachments().add(att);
+        trsnRepo.save(crtrn);
 
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            User user = userRepository.findByEmail(auth.getName());
-            Optional<Transaction> trn = trsnRepo.findById(id);
-            Transaction crtrn = trn.get();
-            if(crtrn.getUser().getId() != user.getId()){
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
+        return ResponseEntity.ok(fileUrl);
+    }
 
-            List<Attachment> attachments = crtrn.getAttachments();
-            Attachment cat = null;
-            for(Attachment e : attachments){
-                if(e.getId()==aid)
-                    cat = e;
+    @PutMapping("/transaction/{id}/attachment/{aid}")
+    public ResponseEntity<Object> uploadAttachment(@PathVariable(value="id") Long id,@PathVariable(value="aid") Long aid, @RequestPart(value="file") MultipartFile file){
 
-            }
-            if(cat == null)
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            String fileUrl = uploadReceipt(file,this.amazonClient.getProfilename());
-
-            cat.setUrl(fileUrl);
-
-            trsnRepo.save(crtrn);
-
-            return ResponseEntity.ok(fileUrl);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(auth.getName());
+        Optional<Transaction> trn = trsnRepo.findById(id);
+        Transaction crtrn = trn.get();
+        if(crtrn.getUser().getId() != user.getId()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        @DeleteMapping("/transaction/{id}/attachment/{attachmentid}")
-        public ResponseEntity<Object> deleteAttachment(@PathVariable(value="id") Long id, @PathVariable(value="attachmentid") Long aid){
+        List<Attachment> attachments = crtrn.getAttachments();
+        Attachment cat = null;
+        for(Attachment e : attachments){
+            if(e.getId()==aid)
+                cat = e;
 
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            User user = userRepository.findByEmail(auth.getName());
-
-            Optional<Transaction> trn = trsnRepo.findById(id);
-            Transaction crtrn = trn.get();
-            if(crtrn.getUser().getId() != user.getId()){
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-            List<Attachment> attachments = crtrn.getAttachments();
-            Attachment cat = null;
-            for(Attachment e : attachments){
-                if(e.getId()==aid)
-                    cat = e;
-
-            }
-            if(cat == null)
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            String fileUrl = cat.getUrl();
-            String message = deleteReceipt(fileUrl,this.amazonClient.getProfilename());
-            attachments.remove(cat);
-            trsnRepo.save(crtrn);
-            //JsonObject j =new JsonObject();
-            //j.addProperty("message", "Attachment Deleted");
-            return ResponseEntity.ok("Attachment Delete");
         }
+        if(cat == null)
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        String fileUrl = uploadReceipt(file,this.amazonClient.getProfilename());
 
-        @PostMapping("/uploadFile")
-        public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
-            return this.amazonClient.uploadFile(file);
-        }
+        cat.setUrl(fileUrl);
 
-        @DeleteMapping("/deleteFile")
-        public String deleteFile(@RequestPart(value = "url") String fileUrl) {
-            return this.amazonClient.deleteFileFromS3Bucket(fileUrl);
+        trsnRepo.save(crtrn);
+
+        return ResponseEntity.ok(fileUrl);
+    }
+
+    @DeleteMapping("/transaction/{id}/attachment/{attachmentid}")
+    public ResponseEntity<Object> deleteAttachment(@PathVariable(value="id") Long id, @PathVariable(value="attachmentid") Long aid){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(auth.getName());
+
+        Optional<Transaction> trn = trsnRepo.findById(id);
+        Transaction crtrn = trn.get();
+        if(crtrn.getUser().getId() != user.getId()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        List<Attachment> attachments = crtrn.getAttachments();
+        Attachment cat = null;
+        for(Attachment e : attachments){
+            if(e.getId()==aid)
+                cat = e;
+
+        }
+        if(cat == null)
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        String fileUrl = cat.getUrl();
+        String message = deleteReceipt(fileUrl,this.amazonClient.getProfilename());
+        attachments.remove(cat);
+        trsnRepo.save(crtrn);
+        //JsonObject j =new JsonObject();
+        //j.addProperty("message", "Attachment Deleted");
+        return ResponseEntity.ok("Attachment Delete");
+    }
+
+    @PostMapping("/uploadFile")
+    public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
+        return this.amazonClient.uploadFile(file);
+    }
+
+    @DeleteMapping("/deleteFile")
+    public String deleteFile(@RequestPart(value = "url") String fileUrl) {
+        return this.amazonClient.deleteFileFromS3Bucket(fileUrl);
+    }
 
     private String uploadReceipt(MultipartFile file, String profilename){
         if(profilename.equals("dev")){
