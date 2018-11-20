@@ -58,11 +58,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-<<<<<<< HEAD
-        </dependency>
-=======
 	</dependency>
->>>>>>> 17ab7d6fff12270986c87bec7d4d4eaca191b16e
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -84,9 +80,9 @@
             <version>1.11.133</version>
         </dependency>
         <!--<dependency>-->
-        <!--<groupId>org.springframework.security</groupId>-->
-        <!--<artifactId>spring-security-test</artifactId>-->
-        <!--<scope>test</scope>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-test</artifactId>-->
+            <!--<scope>test</scope>-->
         <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -104,9 +100,5 @@
     </build>
 
 
-<<<<<<< HEAD
-</project>
-=======
 </project>
 
->>>>>>> 17ab7d6fff12270986c87bec7d4d4eaca191b16e

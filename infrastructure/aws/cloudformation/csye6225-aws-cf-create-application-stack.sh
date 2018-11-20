@@ -6,7 +6,7 @@ read -p "Enter your s3 bucket domain name: " s3domain
 s3artifact="code-deploy.csye6225-fall2018-$s3domain.me.csye6225.com"
 s3attachment="csye6225-fall2018-$s3domain.me.csye6225.com"
 
-export VpcId=$(aws ec2 describe-vpcs --query "Vpcs[0]. [VpcId]" --output text)
+export VpcId=$(aws ec2 describe-vpcs --query "Vpcs[1]. [VpcId]" --output text)
 export subnetid=$(aws ec2 describe-subnets --query 'Subnets[*].[SubnetId, VpcId, AvailabilityZone, CidrBlock]' --output text|grep 10.0.1.0/24|grep us-east-1a|awk '{print $1}')
 export securitygrp=$(aws ec2 describe-security-groups --query 'SecurityGroups[0].[GroupId]' --output text| awk '{print $1}')
 echo $VpcId

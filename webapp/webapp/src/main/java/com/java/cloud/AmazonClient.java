@@ -1,4 +1,3 @@
-
 package com.java.cloud;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -52,11 +51,7 @@ public class AmazonClient {
     }
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
-<<<<<<< HEAD
-        File convFile = new File("/opt/tomcat/webapps/"+file.getOriginalFilename());
-=======
         File convFile = new File("/home/tomcat/webapps/"+file.getOriginalFilename());
->>>>>>> 17ab7d6fff12270986c87bec7d4d4eaca191b16e
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
@@ -89,9 +84,6 @@ public class AmazonClient {
         return "Successfully deleted";
     }
 
-<<<<<<< HEAD
-}
-=======
     public BasicAWSCredentials getCredentials() {
 
         BasicAWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
@@ -103,4 +95,3 @@ public class AmazonClient {
 
 }
 
->>>>>>> 17ab7d6fff12270986c87bec7d4d4eaca191b16e
