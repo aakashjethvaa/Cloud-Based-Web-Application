@@ -40,6 +40,7 @@ Cloud formation
 -Subnet Groups
 
 Web Application 
+
 -Returning Successful API calls
 -Storing image on the local disk and application S3 bucket
 -Update the application.json
