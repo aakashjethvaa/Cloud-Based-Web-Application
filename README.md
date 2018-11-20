@@ -6,7 +6,7 @@ Team Member Details:
 4. Aakash Jethva jethva.a@husky.neu.edu
 
 WebDev Application:
-Technologies : Sts eclipse, IntelliJ, Postman, Sql Workbench, Maria DB
+Technologies : Sts eclipse, IntelliJ, Postman, Sql Workbench, Maria DB,DynamoDB
 
 Using JPA annotations first created a User Pojo 
 Later Extended JPA Repository to User Repository
