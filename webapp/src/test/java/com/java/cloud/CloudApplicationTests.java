@@ -13,6 +13,8 @@ public class CloudApplicationTests {
    @Ignore
     @Test
     public void contextLoads() {
+
     }
 
 }
+

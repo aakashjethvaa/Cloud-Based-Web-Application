@@ -2,7 +2,11 @@ version: 0.0
 os: linux
 
 files:             
+<<<<<<< HEAD
     - source: ./webapp/target/ROOT-1.war
+=======
+  - source: ./webapp/target/ROOT-1.war
+>>>>>>> 17ab7d6fff12270986c87bec7d4d4eaca191b16e
     destination: /opt/tomcat/webapps
 
 hooks:

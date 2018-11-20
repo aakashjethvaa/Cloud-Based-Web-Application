@@ -58,7 +58,11 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+<<<<<<< HEAD
         </dependency>
+=======
+	</dependency>
+>>>>>>> 17ab7d6fff12270986c87bec7d4d4eaca191b16e
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -68,6 +72,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+       <dependency>
+            <groupId>com.timgroup</groupId>
+            <artifactId>java-statsd-client</artifactId>
+            <version>3.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
@@ -95,4 +104,9 @@
     </build>
 
 
+<<<<<<< HEAD
 </project>
+=======
+</project>
+
+>>>>>>> 17ab7d6fff12270986c87bec7d4d4eaca191b16e
