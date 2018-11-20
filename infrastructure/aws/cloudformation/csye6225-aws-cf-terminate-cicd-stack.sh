@@ -1,12 +1,7 @@
-STACK_NAME=$1
+#!/bin/bash
 
-aws cloudformation delete-stack --stack-name $STACK_NAME
+echo "Provide Stack Name"
+read name
 
-aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME
-
-if [ $? -ne "0" ]
-then 
-	echo "Deletion of Stack failed"
-else
-	echo "Deletion of Stack Success"
-fi
+echo "-----------------------------Deleting CloudFormation Stack-------------------------------------"
+aws cloudformation delete-stack --stack-name $name
