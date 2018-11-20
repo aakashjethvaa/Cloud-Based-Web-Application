@@ -12,5 +12,3 @@ echo "Deleting Cloudformation Stack $stack_name"
 aws cloudformation delete-stack --stack-name $stack_name
 
 echo "Stack deleted successfully"
-
-
