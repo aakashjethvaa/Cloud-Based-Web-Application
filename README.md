@@ -5,13 +5,8 @@ Team Member Details:
 3. Hemant Kamath kamath.h@husky.neu.edu
 4. Aakash Jethva jethva.a@husky.neu.edu
 
-<<<<<<< HEAD
-Web Application:
-Technologies : Sts eclipse, IntelliJ, Postman, Sql Workbench, MySQL DB
-=======
 WebDev Application:
 Technologies : Sts eclipse, IntelliJ, Postman, Sql Workbench, Maria DB,DynamoDB
->>>>>>> 17ab7d6fff12270986c87bec7d4d4eaca191b16e
 
 Using JPA annotations first created a User Pojo 
 Later Extended JPA Repository to User Repository
