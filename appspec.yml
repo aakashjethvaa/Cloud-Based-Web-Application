@@ -2,7 +2,11 @@ version: 0.0
 os: linux
 
 files:             
+<<<<<<< HEAD
     - source: ./webapp/target/ROOT-1.war
+=======
+  - source: ./webapp/target/ROOT-1.war
+>>>>>>> 30940e47c8aea71b64ed753895f730d78f35fe2a
     destination: /opt/tomcat/webapps
 
 hooks:
@@ -13,3 +17,4 @@ hooks:
   ApplicationStart:
    - location: ./applicationStart.sh
      timeout: 180
+     runas: centos
