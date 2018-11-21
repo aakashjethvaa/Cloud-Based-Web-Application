@@ -39,7 +39,7 @@ deploy:
     access_key_id: $access_key_id
     secret_access_key: $secret_access_key
     on:
-      branch: assignment07_08
+      branch: master
   - provider: codedeploy
     access_key_id: $access_key_id
     bucket: $s3_bucket
@@ -52,4 +52,4 @@ deploy:
     wait-until-deployed: true
     on:
 
-      branch: assignment07_08
+      branch: master
