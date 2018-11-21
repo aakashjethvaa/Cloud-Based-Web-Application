@@ -55,20 +55,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-<<<<<<< HEAD
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
 
-        </dependency>
-        <dependency>
-=======
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
 	</dependency>
         <dependency>
->>>>>>> 30940e47c8aea71b64ed753895f730d78f35fe2a
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
@@ -78,19 +70,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<<<<<<< HEAD
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk</artifactId>
-            <version>1.11.133</version>
-        </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.security</groupId>-->
-            <!--<artifactId>spring-security-test</artifactId>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-        <dependency>
-=======
+
        <dependency>
             <groupId>com.timgroup</groupId>
             <artifactId>java-statsd-client</artifactId>
@@ -107,7 +87,6 @@
             <!--<scope>test</scope>-->
         <!--</dependency>-->
         <dependency>
->>>>>>> 30940e47c8aea71b64ed753895f730d78f35fe2a
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>
