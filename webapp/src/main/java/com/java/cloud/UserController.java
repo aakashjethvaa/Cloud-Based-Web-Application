@@ -263,6 +263,7 @@ public class UserController {
             }
 
             String fileUrl = uploadReceipt(file,this.amazonClient.getProfilename());
+            System.out.println("FileUrl is ***********   "+fileUrl);
             Attachment att = new Attachment();
             att.setUrl(fileUrl);
             att.setTransaction(crtrn);
