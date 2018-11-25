@@ -15,6 +15,7 @@
 			"Type": "String"
 
 		},
+
 		"SGBaseId": {
 			"Description": "Security Group name",
 			"Type": "String"
@@ -165,42 +166,6 @@
 			}
 		},
 
-"S3LoggingBucket": {
-  "Type": "AWS::S3::Bucket"
-},
-"S3LoggingBucketPolicy": {
-  "Type": "AWS::S3::BucketPolicy",
-  "Properties": {
-    "Bucket": {
-      "Ref": "S3LoggingBucket"
-    },
-    "PolicyDocument": {
-      "Version": "2012-10-17",
-      "Statement": [ {
-        "Sid": "ELBAccessLogs20130930",
-        "Effect": "Allow",
-        "Resource": {
-          "Fn::Join": [
-            "",
-            [
-              "arn:aws:s3:::",
-              { "Ref": "S3LoggingBucket" },
-              "/",
-              "Logs",
-              "/AWSLogs/",
-              { "Ref": "AWS::AccountId" },
-              "/*"
-            ]
-          ]
-        },
-        "Principal": { "Ref": "ElasticLoadBalancingAccountID" },
-        "Action": [
-          "s3:PutObject"
-        ]
-      } ]
-    }
-  }
-},
 "ElasticLoadBalancer": {
   "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
   "Properties": {
@@ -219,26 +184,24 @@
     },
     "AccessLoggingPolicy": {
       "S3BucketName": {
-        "Ref": "S3LoggingBucket"
+        "Ref": "S3"
       },
       "S3BucketPrefix": "Logs",
       "Enabled": "true",
       "EmitInterval" : "60"
     }
-  },
-  "DependsOn": "S3LoggingBucketPolicy"
+  }
 },
 
-		"S3": {
-			"Type": "AWS::S3::Bucket",
-			"Properties": {
+"S3": {
+		"Type": "AWS::S3::Bucket",
+		"Properties": {
 				"BucketName": {
 					"Ref": "s3attachment"
 				}
 			}
 		},
 		
-
 		"WebServerSecurityGroup": {
 			"Type": "AWS::EC2::SecurityGroup",
 			"Properties": {
@@ -340,7 +303,7 @@
 				"DBInstanceClass": "db.t2.micro",
 				"MultiAZ": "false",
 				"DBInstanceIdentifier": "csye6225-Fall2018",
-				"AvailabilityZone": "us-east-1a",
+				"AvailabilityZone":  { "Fn::GetAZs": "" },
 				"MasterUsername": "csye6225master",
 				"MasterUserPassword": "csye6225password",
 				"DBSubnetGroupName": "csye6225-db-subnetgroup",
