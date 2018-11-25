@@ -263,7 +263,6 @@ public class UserController {
             }
 
             String fileUrl = uploadReceipt(file,this.amazonClient.getProfilename());
-            System.out.println("FileUrl is ***********   "+fileUrl);
             Attachment att = new Attachment();
             att.setUrl(fileUrl);
             att.setTransaction(crtrn);
@@ -301,6 +300,7 @@ public class UserController {
             if(cat == null)
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             String delete=this.amazonClient.deleteFileFromS3Bucket(cat.getUrl());
+            System.out.println("DEleted or not ********************************   " +delete);
             String fileUrl = uploadReceipt(file,this.amazonClient.getProfilename());
 
             cat.setUrl(fileUrl);
