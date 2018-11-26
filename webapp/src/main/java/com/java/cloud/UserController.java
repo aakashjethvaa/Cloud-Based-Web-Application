@@ -299,6 +299,7 @@ public class UserController {
             }
             if(cat == null)
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            String delete=this.amazonClient.deleteFileFromS3Bucket(cat.getUrl());
             String fileUrl = uploadReceipt(file,this.amazonClient.getProfilename());
 
             cat.setUrl(fileUrl);
