@@ -116,7 +116,7 @@ public class UserController {
             return "OK";
     }
 
-    @RequestMapping(value = "/transaction", method = RequestMethod.POST)
+    @RequestMapping(value = "/transaction", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
     public String createTransaction(@RequestBody Transaction transaction){
         statsDClient.incrementCounter("createTransaction");
         JsonObject j = new JsonObject();
@@ -157,7 +157,7 @@ public class UserController {
         return txns;
     }
 
-    @RequestMapping(value = "/transaction/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/transaction/{id}", method = RequestMethod.PUT, consumes = {"application/x-www-form-urlencoded"})
     public String updateTransaction(@PathVariable("id") Long id, @RequestBody Transaction transaction){
         statsDClient.incrementCounter("updateTransaction");
 
