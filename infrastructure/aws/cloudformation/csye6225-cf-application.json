@@ -236,7 +236,7 @@
          "EngineVersion":"5.6.37",
          "DBInstanceClass":"db.t2.micro",
          "MultiAZ":"false",
-         "DBInstanceIdentifier":"csye6225-spring2018",
+         "DBInstanceIdentifier":"csye6225-Fall2018",
          "AvailabilityZone":"us-east-1a",
          "MasterUsername":"csye6225master",
          "MasterUserPassword":"csye6225password",
