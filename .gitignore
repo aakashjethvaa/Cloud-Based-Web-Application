@@ -4,8 +4,6 @@ __pycache__/
 *$py.class
 
 #webapp files
-/application.properties
-/application-dev.properties
 .idea/
 *.iml
 *.iws
