@@ -17,7 +17,7 @@ echo $instanceProfileName
 echo "S3 code deploy bucket: $s3artifact"
 echo "S3 attachement bucket: $s3attachment"
 
-createOutput=$(aws cloudformation create-stack --stack-name $stackname --template-body file://csye6225-cf-application.json --parameters ParameterKey=stackname,ParameterValue=$stackname ParameterKey=subnetid,ParameterValue=$subnetid ParameterKey=securitygrp,ParameterValue=$securitygrp ParameterKey=VpcId,ParameterValue=$VpcId ParameterKey=instanceProfileName,ParameterValue=$instanceProfileName ParameterKey=s3artifact,ParameterValue=$s3artifact ParameterKey=s3attachment,ParameterValue=$s3attachment)
+createOutput=$(aws cloudformation create-stack --stack-name $stackname --template-body file://csye6225-cf-auto-scaling-application.json --parameters ParameterKey=stackname,ParameterValue=$stackname ParameterKey=subnetid,ParameterValue=$subnetid ParameterKey=SGBaseId,ParameterValue=$securitygrp ParameterKey=VpcId,ParameterValue=$VpcId ParameterKey=instanceProfileName,ParameterValue=$instanceProfileName ParameterKey=s3artifact,ParameterValue=$s3artifact ParameterKey=s3attachment,ParameterValue=$s3attachment)
 
 
 if [ $? -eq 0 ]; then

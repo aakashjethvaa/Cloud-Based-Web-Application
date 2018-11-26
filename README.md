@@ -40,10 +40,11 @@ Cloud formation
 -Subnet Groups
 
 Web Application 
+
 -Returning Successful API calls
 -Storing image on the local disk and application S3 bucket
--Updatet the application.json
+-Update the application.json
 -Handling all the API Validations
 -Adding the AWS configuration to the Web application
 
-
+All Set!
