@@ -31,3 +31,6 @@ else
 	echo "Error in creation of stack"
 	echo $createOutput
 fi;
+
+	
+
