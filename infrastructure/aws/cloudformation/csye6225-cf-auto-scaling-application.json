@@ -158,7 +158,7 @@
 			"Properties": {
 				"Tags": [{
 					"Key": "NAME",
-					"Value": "CSYE6225",
+					"Value": "Ec2",
 					"PropagateAtLaunch": true
 				}],
 				"VPCZoneIdentifier": [
