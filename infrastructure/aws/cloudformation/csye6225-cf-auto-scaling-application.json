@@ -42,6 +42,10 @@
                       "Description":"Domain name",
                       "Type":"String"
                 },
+                "certARN":{  
+                "Description":" SSL certificate ARN",
+                "Type":"String"
+                },
 		"hzid" :{
 			"Type":"String"
                 }
@@ -158,9 +162,8 @@
 					"PropagateAtLaunch": true
 				}],
 				"VPCZoneIdentifier": [
-					"subnet-033fed66998fcad6c",
-					"subnet-0ad2fbf3ff23add25",
-					"subnet-0163b98748aa0073d"
+					"subnet-0a08c7c0f41407f66",
+					"subnet-08c450932f01f68e9"
 				],
 				"LaunchConfigurationName": {
 					"Ref": "AsgLaunchConfig"
@@ -251,9 +254,8 @@
 				"Properties": {
 					"Scheme": "internet-facing",
 					"Subnets": [
-						"subnet-025dbcee9c46b6b02",
-						"subnet-0ad2fbf3ff23add25",
-						"subnet-08fa21c9ec7094cce"
+						"subnet-0a08c7c0f41407f66",
+						"subnet-08c450932f01f68e9"
 					],
 					"LoadBalancerAttributes": [{
 						"Key": "idle_timeout.timeout_seconds",
@@ -263,8 +265,8 @@
 						"Ref": "WebServerSecurityGroup"
 					}],
 					"Tags": [{
-						"Key": "NAME",
-						"Value": "CSYE6225"
+						"Key": "Name",
+						"Value": "ElasticLoadBalancer"
 					}]
 				}
 			},
@@ -272,7 +274,9 @@
 				"Type": "AWS::ElasticLoadBalancingV2::Listener",
 				"Properties": {
 					"Certificates": [{
-						"CertificateArn":"csye6225-fall2018-jethvaa.me"
+						"CertificateArn":{
+                                                 "Ref":"certARN"
+                                        }
 					}],
 					"DefaultActions": [{
 						"Type": "forward",
@@ -304,8 +308,8 @@
 						"Ref": "VpcId"
 					},
 					"Tags": [{
-						"Key": "NAME",
-						"Value": "CSYE6225"
+						"Key": "Name",
+						"Value": "myTargetGroup"
 					}]
 				}
 			},
@@ -316,8 +320,7 @@
 						"Ref": "hzid"
 					},
 					"Comment": "DNS name setting",
-					"RecordSets": [{
-						"Name": {
+					"Name": {
 							"Ref": "hostedzone"
 						},
 						"Type": "A",
@@ -336,7 +339,6 @@
 								]
 							}
 						}
-					}]
 				}
 			},
 			"WebServerSecurityGroup": {
@@ -372,8 +374,8 @@
 						}
 					],
 					"Tags": [{
-						"Key": "CSYE6225SG",
-						"Value": "new-stack-1-ec2"
+						"Key": "Name",
+						"Value": "WebServerSecurityGroup"
 					}]
 				}
 			},
