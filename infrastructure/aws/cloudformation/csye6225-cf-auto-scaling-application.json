@@ -58,6 +58,7 @@
 				"KeyName": "MyKeyPair",
 				"AssociatePublicIpAddress": "true",
 				"ImageId": "ami-9887c6e7",
+                                "Tags" : [ {"Key" : "Name", "Value" : "Ec2" } ],
 				"UserData": {
 					"Fn::Base64": {
 						"Fn::Join": [
@@ -168,6 +169,11 @@
 				"LaunchConfigurationName": {
                                          "Ref": "AsgLaunchConfig"
 				},
+                                 "LoadBalancerNames" : [ 
+                                   { 
+                                     "Ref" : "ElasticLoadBalancer" 
+                                   } 
+                                ],
 				"MinSize": "3",
 				"MaxSize": "10",
 				"DesiredCapacity": "3",
