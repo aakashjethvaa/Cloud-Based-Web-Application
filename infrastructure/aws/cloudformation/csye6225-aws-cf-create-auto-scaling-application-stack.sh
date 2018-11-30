@@ -7,6 +7,11 @@ s3artifact="code-deploy.csye6225-fall2018-$s3domain.me.csye6225.com"
 s3attachment="csye6225-fall2018-$s3domain.me.csye6225.com"
 domain="csye6225-fall2018-$s3domain.me"
 
+appname="csye6225CodeDeployApplication"
+echo $appname
+depname="csye6225CodeDeployApplication-depgroup"
+echo $depname
+
 #hostedzone=${s3attachment::-1}
 
 HZID=$(aws route53 list-hosted-zones --query 'HostedZones[0].Id' --output text)
@@ -27,7 +32,7 @@ echo $instanceProfileName
 echo "S3 code deploy bucket: $s3artifact"
 echo "S3 attachement bucket: $s3attachment"
 
-createOutput=$(aws cloudformation create-stack --stack-name $stackname --template-body file://csye6225-cf-auto-scaling-application.json --parameters ParameterKey=stackname,ParameterValue=$stackname ParameterKey=subnetid,ParameterValue=$subnetid ParameterKey=securitygrp,ParameterValue=$securitygrp ParameterKey=VpcId,ParameterValue=$VpcId ParameterKey=instanceProfileName,ParameterValue=$instanceProfileName ParameterKey=s3artifact,ParameterValue=$s3artifact ParameterKey=s3attachment,ParameterValue=$s3attachment ParameterKey=hostedzone,ParameterValue=$domain ParameterKey=hzid,ParameterValue=$HZID ParameterKey=certARN,ParameterValue=$certARN)
+createOutput=$(aws cloudformation create-stack --stack-name $stackname --template-body file://csye6225-cf-auto-scaling-application.json --parameters ParameterKey=stackname,ParameterValue=$stackname ParameterKey=subnetid,ParameterValue=$subnetid ParameterKey=securitygrp,ParameterValue=$securitygrp ParameterKey=VpcId,ParameterValue=$VpcId ParameterKey=instanceProfileName,ParameterValue=$instanceProfileName ParameterKey=s3artifact,ParameterValue=$s3artifact ParameterKey=s3attachment,ParameterValue=$s3attachment ParameterKey=hostedzone,ParameterValue=$domain ParameterKey=hzid,ParameterValue=$HZID ParameterKey=certARN,ParameterValue=$certARN ParameterKey=appname,ParameterValue=$appname ParameterKey=depname,ParameterValue=$depname)
 
 
 if [ $? -eq 0 ]; then
@@ -41,3 +46,4 @@ else
 	echo "Error in creation of stack"
 	echo $createOutput
 fi;
+ParameterKey=appname,ParameterValue=$appname ParameterKey=depname,ParameterValue=$depname

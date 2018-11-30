@@ -42,10 +42,21 @@
                       "Description":"Domain name",
                       "Type":"String"
                 },
+                "CodeDeployApplicationName": {
+			"Type": "String"
+		},
                 "certARN":{  
                 "Description":" SSL certificate ARN",
                 "Type":"String"
                 },
+                "appname" : {
+                "Description" : "Application Name",
+                "Type" : "String"
+                },
+                "depname" : {
+                "Description" : "Deployment Group Name",
+                "Type" : "String"
+  },
 		"hzid" :{
 			"Type":"String"
                 }
@@ -252,6 +263,7 @@
 			"ElasticLoadBalancer": {
 				"Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
 				"Properties": {
+                                        "Name": "ELB",
 					"Scheme": "internet-facing",
 					"Subnets": [
 						"subnet-0f3ff5380a696cd20",
@@ -455,6 +467,59 @@
 					"PubliclyAccessible": "false",
 					"DBName": "csye6225"
 				}
-			}
-		}
-	}
+			},
+                       "CodeDeployServiceRole" : {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "ManagedPolicyArns" : ["arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"],
+              "AssumeRolePolicyDocument": {
+                "Version" : "2012-10-17",
+                "Statement": [ {
+                "Effect": "Allow",
+                "Principal": {
+                  "Service": [ "ec2.amazonaws.com", "codedeploy.amazonaws.com"]
+                  },
+                "Action": [ "sts:AssumeRole" ]
+                } ]
+              },
+          "RoleName": "CodeDeployServiceRole"
+          }
+        },
+    "CodeDeployApplication": {
+      "Type": "AWS::CodeDeploy::Application",
+      "Properties": {
+        "ApplicationName" : {"Ref" : "appname"}
+      }
+    },
+     "CodeDeployDeploymentGroup": {
+      "Type": "AWS::CodeDeploy::DeploymentGroup",
+      "Properties": {
+        "ApplicationName" : {"Ref" : "appname"},
+          "DeploymentStyle": {
+          "DeploymentType": "IN_PLACE",
+          "DeploymentOption": "WITHOUT_TRAFFIC_CONTROL"
+        },
+        "LoadBalancerInfo": {
+          "ElbInfoList": [
+            {
+              "Name": "ELB"
+            }
+          ]
+        },
+         "AutoScalingGroups": [
+          {
+            "Ref": "WebServerGroup"
+          }
+        ],
+        "Ec2TagFilters" : [{
+          "Key" : "Name",
+          "Value" : "CSYE6225",
+          "Type" : "KEY_AND_VALUE"
+        }],
+        "ServiceRoleArn" : {"Fn::GetAtt" : ["CodeDeployServiceRole", "Arn"]},
+        "DeploymentGroupName" : {"Ref" : "depname"}
+      }
+    },
+         }
+}
+
