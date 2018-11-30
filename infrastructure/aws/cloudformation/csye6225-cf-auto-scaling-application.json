@@ -158,7 +158,7 @@
 			"Properties": {
 				"Tags": [{
 					"Key": "Name",
-					"Value": "EC2WebApplication",
+					"Value": "Ec2",
 					"PropagateAtLaunch": true
 				}],
 				"VPCZoneIdentifier": [
@@ -166,6 +166,7 @@
 					"subnet-0bfdacdb9bb9aec76"
 				],
 				"LaunchConfigurationName": {
+                                         "Ref": "AsgLaunchConfig"
 				},
 				"MinSize": "3",
 				"MaxSize": "10",
