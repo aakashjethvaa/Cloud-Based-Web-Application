@@ -275,7 +275,7 @@
 				},
 				"Ec2TagFilters" : [{
           "Key" : "Name",
-          "Value" : "ec2",
+          "Value" : "EC2WebApplication",
           "Type" : "KEY_AND_VALUE"
         }]
 			}
