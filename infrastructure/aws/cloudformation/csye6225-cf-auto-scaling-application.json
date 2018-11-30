@@ -162,8 +162,8 @@
 					"PropagateAtLaunch": true
 				}],
 				"VPCZoneIdentifier": [
-					"subnet-0a08c7c0f41407f66",
-					"subnet-08c450932f01f68e9"
+					"subnet-0f3ff5380a696cd20",
+					"subnet-0bfdacdb9bb9aec76"
 				],
 				"LaunchConfigurationName": {
 					"Ref": "AsgLaunchConfig"
@@ -254,8 +254,8 @@
 				"Properties": {
 					"Scheme": "internet-facing",
 					"Subnets": [
-						"subnet-0a08c7c0f41407f66",
-						"subnet-08c450932f01f68e9"
+						"subnet-0f3ff5380a696cd20",
+						"subnet-0bfdacdb9bb9aec76"
 					],
 					"LoadBalancerAttributes": [{
 						"Key": "idle_timeout.timeout_seconds",
