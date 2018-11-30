@@ -157,7 +157,7 @@
 			"Type": "AWS::AutoScaling::AutoScalingGroup",
 			"Properties": {
 				"Tags": [{
-					"Key": "NAME",
+					"Key": "Name",
 					"Value": "Ec2",
 					"PropagateAtLaunch": true
 				}],
@@ -165,8 +165,7 @@
 					"subnet-0f3ff5380a696cd20",
 					"subnet-0bfdacdb9bb9aec76"
 				],
-				"LaunchConfigurationName": {
-					"Ref": "AsgLaunchConfig"
+				"LaunchConfigurationName": {c22
 				},
 				"MinSize": "3",
 				"MaxSize": "10",
