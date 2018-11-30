@@ -275,7 +275,7 @@
 				},
 				"Ec2TagFilters" : [{
           "Key" : "Name",
-          "Value" : "Ec2",
+          "Value" : "CSYE6225",
           "Type" : "KEY_AND_VALUE"
         }]
 			}
