@@ -39,7 +39,7 @@ Cloud formation
 -DynamoDB
 -Subnet Groups
 
-Web Application 
+Web Applicationn 
 
 -Returning Successful API calls
 -Storing image on the local disk and application S3 bucket

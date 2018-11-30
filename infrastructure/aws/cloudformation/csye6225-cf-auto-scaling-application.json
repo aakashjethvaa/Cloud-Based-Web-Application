@@ -42,9 +42,6 @@
                       "Description":"Domain name",
                       "Type":"String"
                 },
-                "CodeDeployApplicationName": {
-			"Type": "String"
-		},
                 "certARN":{  
                 "Description":" SSL certificate ARN",
                 "Type":"String"
@@ -56,7 +53,7 @@
                 "depname" : {
                 "Description" : "Deployment Group Name",
                 "Type" : "String"
-  },
+                },
 		"hzid" :{
 			"Type":"String"
                 }
@@ -519,7 +516,7 @@
         "ServiceRoleArn" : {"Fn::GetAtt" : ["CodeDeployServiceRole", "Arn"]},
         "DeploymentGroupName" : {"Ref" : "depname"}
       }
-    },
-         }
+    }
+  }
 }
 
