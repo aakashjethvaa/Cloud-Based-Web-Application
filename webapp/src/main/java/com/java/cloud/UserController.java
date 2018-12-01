@@ -135,6 +135,7 @@ public class UserController {
             trsnRepo.save(newtransaction);
 
             j.addProperty("message", "Transaction added successfully");
+            j.addProperty("id",newtransaction.getId());
             return j.toString();
 
 
