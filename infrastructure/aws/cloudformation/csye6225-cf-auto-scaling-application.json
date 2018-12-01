@@ -243,13 +243,12 @@
 				}
 			},
 			"ElasticLoadBalancer": {
-				"Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+				"Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
 				"Properties": {
 					"Scheme": "internet-facing",
 					"Subnets": [
-						"subnet-025dbcee9c46b6b02",
-						"subnet-0ad2fbf3ff23add25",
-						"subnet-08fa21c9ec7094cce"
+						"subnet-01b318d6f0650059f",
+						"subnet-05ed51f7fc5430d4c"
 					],
 					"LoadBalancerAttributes": [{
 						"Key": "idle_timeout.timeout_seconds",
@@ -268,7 +267,7 @@
 				"Type": "AWS::ElasticLoadBalancingV2::Listener",
 				"Properties": {
 					"Certificates": [{
-						"CertificateArn":"csye6225-fall2018-suthark.me"
+						"CertificateArn":"csye6225-fall2018-kamathh.me"
 					}],
 					"DefaultActions": [{
 						"Type": "forward",
