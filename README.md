@@ -5,7 +5,7 @@ Team Member Details:
 3. Hemant Kamath kamath.h@husky.neu.edu
 4. Aakash Jethva jethva.a@husky.neu.edu
 
-WebDev Application:
+WebDev Applicationn:
 Technologies : Sts eclipse, IntelliJ, Postman, Sql Workbench, Maria DB,DynamoDBB
 
 Using JPA annotations first created a User Pojo 
