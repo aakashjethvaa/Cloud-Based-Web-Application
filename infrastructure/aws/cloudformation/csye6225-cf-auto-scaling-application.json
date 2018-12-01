@@ -170,8 +170,8 @@
 					"PropagateAtLaunch": true
 				}],
 				"VPCZoneIdentifier": [
-					"subnet-0f04e26062ff36a1b",
-					"subnet-0de75d0722934ea4c"
+					"subnet-03c8993f8af219ffe",
+					"subnet-0e7394229e47c921a"
 				],
 				"LaunchConfigurationName": {
                                          "Ref": "AsgLaunchConfig"
@@ -263,8 +263,8 @@
                                         "Name": "ELB",
 					"Scheme": "internet-facing",
 					"Subnets": [
-						"subnet-0f04e26062ff36a1b",
-						"subnet-0de75d0722934ea4c"
+						"subnet-03c8993f8af219ffe",
+						"subnet-0e7394229e47c921a"
 					],
 					"LoadBalancerAttributes": [{
 						"Key": "idle_timeout.timeout_seconds",
@@ -485,7 +485,6 @@
           }
         },
     "CodeDeployApplication": {
-      "DependsOn" : ["CodeDeployApplication","myTargetGroup","WebServerGroup"],
       "Type": "AWS::CodeDeploy::Application",
       "Properties": {
         "ApplicationName" : {"Ref" : "appname"}
@@ -499,9 +498,13 @@
           "DeploymentType": "IN_PLACE",
           "DeploymentOption": "WITHOUT_TRAFFIC_CONTROL"
         },
-         "LoadBalancerInfo":{
-            "TargetGroupInfoList":[{"Name":{"Fn::GetAtt":["myTargetGroup","TargetGroupName"]}}]
-          },
+       "LoadBalancerInfo": {
+          "ElbInfoList": [
+            {
+              "Name": "ELB"
+            }
+          ]
+        },
          "AutoScalingGroups": [
           {
             "Ref": "WebServerGroup"
