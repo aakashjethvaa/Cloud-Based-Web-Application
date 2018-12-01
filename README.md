@@ -6,7 +6,7 @@ Team Member Details:
 4. Aakash Jethva jethva.a@husky.neu.edu
 
 WebDev Application:
-Technologies : Sts eclipse, IntelliJ, Postman, Sql Workbench, Maria DB,DynamoDB
+Technologies : Sts eclipse, IntelliJ, Postman, Sql Workbench, Maria DB,DynamoDBB
 
 Using JPA annotations first created a User Pojo 
 Later Extended JPA Repository to User Repository
@@ -39,7 +39,7 @@ Cloud formation
 -DynamoDB
 -Subnet Groups
 
-Web Application 
+Web Applicationn 
 
 -Returning Successful API calls
 -Storing image on the local disk and application S3 bucket

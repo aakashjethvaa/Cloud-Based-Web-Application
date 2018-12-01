@@ -6,15 +6,6 @@
         "Description" : "S3 Bucket Name",
         "Type" : "String"
   
-  },"appname" : {
-    "Description" : "Application Name",
-    "Type" : "String"
-
-  },
-  "depname" : {
-    "Description" : "Deployment Group Name",
-    "Type" : "String"
-
   },
   "accid" : {
     "Description" : "Account Id",
@@ -222,42 +213,6 @@
         "Path" : "/"
       }
     },
-    "CodeDeployServiceRole" : {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-              "ManagedPolicyArns" : ["arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"],
-              "AssumeRolePolicyDocument": {
-                "Version" : "2012-10-17",
-                "Statement": [ {
-                "Effect": "Allow",
-                "Principal": {
-                  "Service": [ "ec2.amazonaws.com", "codedeploy.amazonaws.com"]
-                  },
-                "Action": [ "sts:AssumeRole" ]
-                } ]
-              },
-          "RoleName": "CodeDeployServiceRole"
-          }
-        },
-    "CodeDeployApplication": {
-      "Type": "AWS::CodeDeploy::Application",
-      "Properties": {
-        "ApplicationName" : {"Ref" : "appname"}
-      }
-    },
-     "CodeDeployDeploymentGroup": {
-      "Type": "AWS::CodeDeploy::DeploymentGroup",
-      "Properties": {
-        "ApplicationName" : {"Ref" : "appname"},
-        "Ec2TagFilters" : [{
-          "Key" : "Name",
-          "Value" : "EC2Instance",
-          "Type" : "KEY_AND_VALUE"
-        }],
-        "ServiceRoleArn" : {"Fn::GetAtt" : ["CodeDeployServiceRole", "Arn"]},
-        "DeploymentGroupName" : {"Ref" : "depname"}
-      }
-    },
     "CloudWatchPolicy" : {
       "Type": "AWS::IAM::ManagedPolicy",
       "Properties": {
@@ -302,13 +257,5 @@
           }
       }
     }
-    },
-    "Outputs" : {
-      "CodeDeployServiceRoleArn" : {
-        "Description" : "Code Deploy Arn",
-        "Value" : {
-          "Fn::GetAtt" : ["CodeDeployServiceRole", "Arn"]}
-        }
-      }
-
+    }
 }

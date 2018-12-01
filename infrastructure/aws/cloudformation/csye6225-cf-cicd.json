@@ -249,36 +249,6 @@
 					"Ref": "CodeDeployS3BucketName"
 				}
 			}
-		},
-		"ourCodeDeployApplication": {
-			"Type": "AWS::CodeDeploy::Application",
-			"Properties": {
-				"ApplicationName": {
-					"Ref": "CodeDeployApplicationName"
-				}
-			}
-		},
-		"ourCodeDeploymentGroup": {
-			"Type": "AWS::CodeDeploy::DeploymentGroup",
-			"Properties": {
-				"ApplicationName": {
-					"Ref": "CodeDeployApplicationName"
-				},
-				"DeploymentGroupName": {
-					"Ref": "CodeDeployApplicationName"
-				},
-				"ServiceRoleArn": {
-					"Fn::GetAtt": [
-						"ourCodeDeployServiceRole",
-						"Arn"
-					]
-				},
-				"Ec2TagFilters" : [{
-          "Key" : "Name",
-          "Value" : "ec2",
-          "Type" : "KEY_AND_VALUE"
-        }]
-			}
 		}
 	}
 }
