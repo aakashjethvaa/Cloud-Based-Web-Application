@@ -170,8 +170,8 @@
 					"PropagateAtLaunch": true
 				}],
 				"VPCZoneIdentifier": [
-					"subnet-0f3ff5380a696cd20",
-					"subnet-0bfdacdb9bb9aec76"
+					"subnet-0f04e26062ff36a1b",
+					"subnet-0de75d0722934ea4c"
 				],
 				"LaunchConfigurationName": {
                                          "Ref": "AsgLaunchConfig"
@@ -263,8 +263,8 @@
                                         "Name": "ELB",
 					"Scheme": "internet-facing",
 					"Subnets": [
-						"subnet-0f3ff5380a696cd20",
-						"subnet-0bfdacdb9bb9aec76"
+						"subnet-0f04e26062ff36a1b",
+						"subnet-0de75d0722934ea4c"
 					],
 					"LoadBalancerAttributes": [{
 						"Key": "idle_timeout.timeout_seconds",
@@ -283,6 +283,7 @@
 				"Type": "AWS::ElasticLoadBalancingV2::Listener",
 				"Properties": {
 					"Certificates": [{
+
 						"CertificateArn":{
                                                  "Ref":"certARN"
                                         }
