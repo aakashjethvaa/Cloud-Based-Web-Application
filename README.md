@@ -30,7 +30,7 @@ Run the csye6225-aws-cf-terminate-stack.sh bash script from the folder csye6225-
 command: ./csye6225-aws-cf-terminate-stack.sh 
 
 user should enter the name of the stack to be deleted
-This will delete the cloud formation stack on awss
+This will delete the cloud formation stack on aws
 
 --------------------------------------------------------------
 Cloud formation 
