@@ -39,7 +39,7 @@ deploy:
     access_key_id: $access_key_id
     secret_access_key: $secret_access_key
     on:
-      branch: assignment09
+      branch: master
 
 
   - provider: codedeploy
@@ -53,6 +53,6 @@ deploy:
     secret_access_key: $secret_access_key
     wait-until-deployed: true
     on:
-      branch: assignment09
+      branch: master
 
 
