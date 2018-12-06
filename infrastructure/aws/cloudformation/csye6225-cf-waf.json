@@ -315,7 +315,7 @@
                         "FieldToMatch": {
                             "Type": "BODY"
                         },
-                        "Size": "200",
+                        "Size": "10000000",
                         "TextTransformation": "NONE"
                     }
                 ]
