@@ -170,8 +170,8 @@
 					"PropagateAtLaunch": true
 				}],
 				"VPCZoneIdentifier": [
-					"subnet-0806b50d8ca4afb9a",
-					"subnet-0c0829822c9238ffa"
+					"subnet-01185bdee48545f6f",
+					"subnet-0a7f01bc1e007203d"
 				],
 				"LaunchConfigurationName": {
                                          "Ref": "AsgLaunchConfig"
@@ -263,8 +263,8 @@
                                         "Name": "ELB",
 					"Scheme": "internet-facing",
 					"Subnets": [
-						"subnet-0806b50d8ca4afb9a",
-						"subnet-0c0829822c9238ffa"
+						"subnet-01185bdee48545f6f",
+						"subnet-0a7f01bc1e007203d"
 					],
 					"LoadBalancerAttributes": [{
 						"Key": "idle_timeout.timeout_seconds",
