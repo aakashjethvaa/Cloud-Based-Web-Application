@@ -5,34 +5,31 @@ Team Member Details:
 3. Hemant Kamath kamath.h@husky.neu.edu
 4. Aakash Jethva jethva.a@husky.neu.edu
 
-WebDev Applicationn:
-Technologies : Sts eclipse, IntelliJ, Postman, Sql Workbench, Maria DB,DynamoDBB
+WebDev Applicationn and Tools : Sts eclipse, IntelliJ, Postman, Sql Workbench.
 
-Using JPA annotations first created a User Pojo 
-Later Extended JPA Repository to User Repository
-Incorporated User Controller and deviced all JPA annotations
-Later added the BCryptPasswordEncoderBean used for hashing passwords.
-Using @ManyToOne annotation  mapped Transaction pojo to User pojo
-Extended JPA Repository to Transaction Repository
-Incorporated Transaction Controller and deviced all JPA annotations
-Incorporated Authentication and Authorization on Transaction using User Credentials
+Designed and Build Fault tolerant web application which was hosted on AWS with attachments
+added and uploaded to S3 bucket, stored metadata in AWS RDS(MySQL) using entity framework
+• Automated creation of every AWS resource via bash scripts and AWS Cloudformation
+• Implemented CI/CD pipeline using Git forking workflow, Travis CI and AWS CodeDeploy
+• Leveraged Autoscaling groups to manage EC2 instances based on CloudWatch Alarms
+• Designed security groups to control flow of traffic between ELB, EC2 and RDS instances
+• Restricted access to AWS resources such AWS S3 buckets using IAM Roles and Policies
+• Enabled automatic capturing of application server logs using AWS CloudWatch
+• Designed routing policies to map HTTPS traffic on Elastic Load Balancer to HTTP on EC2
+• Issued a DNS name from Namecheap and mapped it on AWS Route53
+• Engineered a “password reset functionality” using AWS SNS, SES, Lambda and Dynamo DB
 
 AWS Cloud Formation:
 
-Run the csye6225-aws-cf-create-stack.sh bash script from the folder csye6225-fall2018/infrastructure/aws/cloudformation
-command: ./csye6225-aws-cf-create-stack.sh 
-
-User should enter the stack name
+Run the csye6225-aws-cf-create-stack.sh bash script
 This will create cloud formation stack on aws
 
 To delete the stack: 
-Run the csye6225-aws-cf-terminate-stack.sh bash script from the folder csye6225-fall2018/infrastructure/aws/cloudformation
-command: ./csye6225-aws-cf-terminate-stack.sh 
-
-user should enter the name of the stack to be deleted
+Run the csye6225-aws-cf-terminate-stack.sh bash script
 This will delete the cloud formation stack on aws
 
 --------------------------------------------------------------
+
 Cloud formation 
 -S3 Bucket generation
 -RDS instance creation
@@ -46,5 +43,3 @@ Web Applicationn
 -Update the application.json
 -Handling all the API Validations
 -Adding the AWS configuration to the Web application
-
-All Set!
